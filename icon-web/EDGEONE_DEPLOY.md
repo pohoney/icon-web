@@ -17,6 +17,24 @@ This project uses EdgeOne Pages Blob through a Pages Function.
 - Blob key: `icons/index.json`
 - Read: `GET /api/icons`
 - Save: `POST /api/icons` with `{ "icons": [...] }`
+- Upload URL: `POST /api/upload-url`
+- Asset read: `GET /api/assets?key=icons/example.png`
+
+## Admin
+
+Admin page:
+
+```text
+/admin.html
+```
+
+Set this environment variable in EdgeOne before editing icons:
+
+```text
+ICON_ADMIN_TOKEN=<your private admin token>
+```
+
+The admin page stores the token only in your browser localStorage and sends it as `x-admin-token` when saving data or uploading files.
 
 If the EdgeOne Function is not available in local static preview, the page falls back to local placeholder icon records in `public/app.js`.
 

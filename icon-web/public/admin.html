@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Icon Admin</title>
+    <link rel="stylesheet" href="/admin.css" />
+  </head>
+  <body>
+    <main class="admin-shell">
+      <header class="admin-topbar">
+        <div>
+          <p class="kicker">EdgeOne Blob</p>
+          <h1>Icon Library Admin</h1>
+        </div>
+        <a href="/" class="ghost-link">前台</a>
+      </header>
+
+      <section class="panel token-panel">
+        <label>
+          <span>Admin Token</span>
+          <input id="adminToken" type="password" autocomplete="off" placeholder="EdgeOne 环境变量 ICON_ADMIN_TOKEN" />
+        </label>
+        <button id="saveToken" type="button">保存到本机</button>
+        <button id="loadIcons" type="button">读取数据</button>
+      </section>
+
+      <section class="panel form-panel">
+        <div class="form-grid">
+          <label>
+            <span>ID</span>
+            <input id="iconId" type="text" placeholder="tennis-ball" />
+          </label>
+          <label>
+            <span>英文标题</span>
+            <input id="title" type="text" placeholder="Tennis Ball" />
+          </label>
+          <label>
+            <span>中文标题</span>
+            <input id="titleZh" type="text" placeholder="网球" />
+          </label>
+          <label>
+            <span>分类</span>
+            <input id="category" type="text" value="tennis" />
+          </label>
+          <label>
+            <span>英文标签，用逗号分隔</span>
+            <input id="tags" type="text" placeholder="tennis,equipment" />
+          </label>
+          <label>
+            <span>中文标签，用逗号分隔</span>
+            <input id="tagsZh" type="text" placeholder="网球,器材" />
+          </label>
+          <label class="wide">
+            <span>英文描述</span>
+            <textarea id="description" rows="3"></textarea>
+          </label>
+          <label class="wide">
+            <span>中文描述</span>
+            <textarea id="descriptionZh" rows="3"></textarea>
+          </label>
+          <label>
+            <span>排序</span>
+            <input id="sort" type="number" value="100" />
+          </label>
+          <label>
+            <span>状态</span>
+            <select id="status">
+              <option value="active">上架</option>
+              <option value="hidden">隐藏</option>
+            </select>
+          </label>
+          <label class="file-field wide">
+            <span>Icon 图片</span>
+            <input id="iconFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" />
+          </label>
+        </div>
+        <div class="actions">
+          <button id="resetForm" type="button" class="secondary">清空</button>
+          <button id="saveIcon" type="button">上传并保存</button>
+        </div>
+        <p id="statusText" class="status-text">等待操作</p>
+      </section>
+
+      <section class="panel">
+        <div class="list-head">
+          <h2>Icons</h2>
+          <button id="saveAll" type="button" class="secondary">保存当前列表</button>
+        </div>
+        <div id="iconList" class="icon-list"></div>
+      </section>
+    </main>
+
+    <script src="/admin.js" type="module"></script>
+  </body>
+</html>

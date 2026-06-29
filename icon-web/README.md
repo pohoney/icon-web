@@ -43,6 +43,8 @@ The deployed EdgeOne version reads icon records from `GET /api/icons`.
 
 That API is implemented in `edge-functions/api/icons.js` and stores data in EdgeOne Pages Blob store `icon-data`, key `icons/index.json`.
 
+The admin page is `/admin.html`. Set `ICON_ADMIN_TOKEN` in EdgeOne environment variables before using it.
+
 Local static preview falls back to the placeholder records in `public/app.js`.
 
 See `EDGEONE_DEPLOY.md` for deployment settings.
