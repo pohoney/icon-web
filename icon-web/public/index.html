@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tennis Icon Net</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar" aria-label="Icon library controls">
+        <button class="brand-button" id="homeButton" type="button" aria-label="Home">
+          <span class="brand-mark">TI</span>
+          <span class="brand-copy">
+            <span class="brand-kicker">tennis icon net</span>
+            <strong>图标瀑布网</strong>
+          </span>
+        </button>
+
+        <div class="search-wrap">
+          <span class="search-glyph" aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" autocomplete="off" />
+        </div>
+
+        <nav class="category-tabs" aria-label="Categories">
+          <button class="category-button active" data-category="all" type="button"></button>
+          <button class="category-button" data-category="tennis" type="button"></button>
+        </nav>
+
+        <button id="languageButton" class="round-button" type="button"></button>
+      </header>
+
+      <main class="stage-shell">
+        <section class="intro-strip" aria-label="Library summary">
+          <p id="viewHint"></p>
+          <strong id="resultCount"></strong>
+        </section>
+
+        <section id="netStage" class="net-stage" aria-label="Drooping icon waterfall">
+          <div id="iconNet" class="icon-net"></div>
+        </section>
+
+        <section id="emptyState" class="empty-state" hidden>
+          <h1></h1>
+          <button id="clearFilters" class="detail-button primary" type="button"></button>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="detailDialog" class="detail-dialog">
+      <div class="detail-card">
+        <button id="closeDetail" class="close-button" type="button" aria-label="Close">×</button>
+        <div class="detail-preview" id="detailPreview"></div>
+        <div class="detail-copy">
+          <div class="detail-meta" id="detailTags"></div>
+          <h1 id="detailTitle"></h1>
+          <p id="detailDescription"></p>
+          <div class="detail-actions">
+            <button id="copyImage" class="detail-button secondary" type="button"></button>
+            <button id="downloadImage" class="detail-button primary" type="button"></button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="/config.js"></script>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
