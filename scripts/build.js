@@ -14,4 +14,5 @@ if (existsSync(output)) {
 }
 
 cpSync(join(app, "dist"), output, { recursive: true });
+cpSync(join(app, "edge-functions"), join(output, "edge-functions"), { recursive: true });
 console.log("Root build completed. Output copied to dist/");
