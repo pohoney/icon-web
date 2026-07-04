@@ -47,6 +47,29 @@
       </main>
     </div>
 
+    <aside class="effect-panel" aria-label="Icon preview effect controls">
+      <div class="effect-panel-head">
+        <strong>效果调节</strong>
+        <button id="resetEffect" type="button">重置</button>
+      </div>
+      <label>
+        <span>展开</span>
+        <input class="effect-slider" data-effect="spread" type="range" min="0" max="180" value="100" />
+      </label>
+      <label>
+        <span>下垂</span>
+        <input class="effect-slider" data-effect="droop" type="range" min="0" max="180" value="100" />
+      </label>
+      <label>
+        <span>透视</span>
+        <input class="effect-slider" data-effect="depth" type="range" min="0" max="180" value="100" />
+      </label>
+      <label>
+        <span>尺寸</span>
+        <input class="effect-slider" data-effect="scale" type="range" min="70" max="140" value="100" />
+      </label>
+    </aside>
+
     <dialog id="detailDialog" class="detail-dialog">
       <div class="detail-card">
         <button id="closeDetail" class="close-button" type="button" aria-label="Close">×</button>

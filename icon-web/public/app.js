@@ -333,6 +333,7 @@ const state = {
   selected: null,
   loading: true,
   source: "local",
+  effect: loadEffectSettings(),
   imageStatus: new Map()
 };
 
@@ -358,8 +359,46 @@ const els = {
   copy: document.querySelector("#copyImage"),
   download: document.querySelector("#downloadImage"),
   toast: document.querySelector("#toast"),
-  home: document.querySelector("#homeButton")
+  home: document.querySelector("#homeButton"),
+  effectSliders: [...document.querySelectorAll(".effect-slider")],
+  resetEffect: document.querySelector("#resetEffect")
 };
+
+function loadEffectSettings() {
+  const defaults = { spread: 100, droop: 100, depth: 100, scale: 100 };
+  try {
+    return { ...defaults, ...JSON.parse(localStorage.getItem("ICON_EFFECT_SETTINGS") || "{}") };
+  } catch {
+    return defaults;
+  }
+}
+
+function saveEffectSettings() {
+  localStorage.setItem("ICON_EFFECT_SETTINGS", JSON.stringify(state.effect));
+}
+
+function setupEffectControls() {
+  els.effectSliders.forEach((slider) => {
+    const key = slider.dataset.effect;
+    if (!key) return;
+    slider.value = state.effect[key] ?? slider.value;
+    slider.addEventListener("input", () => {
+      state.effect[key] = Number(slider.value);
+      saveEffectSettings();
+      renderNet();
+    });
+  });
+
+  els.resetEffect?.addEventListener("click", () => {
+    state.effect = { spread: 100, droop: 100, depth: 100, scale: 100 };
+    saveEffectSettings();
+    els.effectSliders.forEach((slider) => {
+      const key = slider.dataset.effect;
+      if (key) slider.value = state.effect[key];
+    });
+    renderNet();
+  });
+}
 
 function label(icon, key) {
   if (state.lang === "zh") return icon[`${key}Zh`] || icon[key];
@@ -526,10 +565,13 @@ function renderNet() {
     const col = index % 4;
     const rowPower = Math.pow(row, 1.36);
     const side = col - 1.5;
+    const spread = state.effect.spread / 100;
+    const droop = state.effect.droop / 100;
+    const depth = state.effect.depth / 100;
     const sway = row === 0 ? 0 : ((index * 37) % 19) - 9;
-    const fan = side * rowPower * 24;
-    const drop = row === 0 ? 0 : rowPower * 34 + Math.abs(side) * row * 18;
-    const rotate = row === 0 ? 0 : side * row * 3.8 + (index % 3 - 1) * 2.2;
+    const fan = side * rowPower * 24 * spread;
+    const drop = row === 0 ? 0 : (rowPower * 34 + Math.abs(side) * row * 18) * droop;
+    const rotate = row === 0 ? 0 : (side * row * 3.8 + (index % 3 - 1) * 2.2) * depth;
     const title = label(icon, "title");
     const tags = getTags(icon).slice(0, 2).join(" / ");
 
@@ -575,13 +617,15 @@ function updateNetProgress() {
     const fan = Number(tile.dataset.fan || 0);
     const drop = Number(tile.dataset.drop || 0);
     const tilt = Number(tile.dataset.tilt || 0);
+    const depth = state.effect.depth / 100;
+    const scaleEffect = state.effect.scale / 100;
     const tension = 1 - flatten;
     const x = (sway + fan) * tension;
     const y = drop * tension;
-    const z = -row * tension * 26;
-    const rotateX = (3 + row * 2.8) * tension;
+    const z = -row * tension * 26 * depth;
+    const rotateX = (3 + row * 2.8) * tension * depth;
     const rotateZ = tilt * tension;
-    const scale = 0.84 + flatten * 0.16 + Math.min(row, 6) * 0.012 * tension;
+    const scale = (0.84 + flatten * 0.16 + Math.min(row, 6) * 0.012 * tension) * scaleEffect;
     tile.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateX(${rotateX.toFixed(2)}deg) rotateZ(${rotateZ.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
   });
 }
@@ -735,4 +779,5 @@ els.home.addEventListener("click", () => {
 window.addEventListener("scroll", updateNetProgress, { passive: true });
 window.addEventListener("resize", updateNetProgress);
 
+setupEffectControls();
 loadIconsFromDatabase().then(render);
