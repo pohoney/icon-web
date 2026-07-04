@@ -351,8 +351,6 @@ const state = {
 };
 
 let iconData = [...fallbackIconData];
-const EFFECT_SETTINGS_KEY = "ICON_EFFECT_SETTINGS_V4";
-const DEFAULT_EFFECT_SETTINGS = { gap: 14, size: 126, perspective: 160, stretch: 146 };
 
 const els = {
   search: document.querySelector("#searchInput"),
@@ -380,9 +378,9 @@ const els = {
 };
 
 function loadEffectSettings() {
-  const defaults = DEFAULT_EFFECT_SETTINGS;
+  const defaults = { gap: 50, size: 100, perspective: 100, stretch: 100 };
   try {
-    const raw = JSON.parse(localStorage.getItem(EFFECT_SETTINGS_KEY) || "{}");
+    const raw = JSON.parse(localStorage.getItem("ICON_EFFECT_SETTINGS") || "{}");
     const saved = {
       ...defaults,
       ...raw,
@@ -409,7 +407,7 @@ function clampNumber(value, min, max, fallback) {
 }
 
 function saveEffectSettings() {
-  localStorage.setItem(EFFECT_SETTINGS_KEY, JSON.stringify(state.effect));
+  localStorage.setItem("ICON_EFFECT_SETTINGS", JSON.stringify(state.effect));
 }
 
 function setupEffectControls() {
@@ -425,7 +423,7 @@ function setupEffectControls() {
   });
 
   els.resetEffect?.addEventListener("click", () => {
-    state.effect = { ...DEFAULT_EFFECT_SETTINGS };
+    state.effect = { gap: 50, size: 100, perspective: 100, stretch: 100 };
     saveEffectSettings();
     els.effectSliders.forEach((slider) => {
       const key = slider.dataset.effect;
@@ -494,15 +492,8 @@ function mapDbIcon(row) {
 }
 
 async function loadIconsFromDatabase() {
-  let timeout = null;
   try {
-    const controller = new AbortController();
-    timeout = window.setTimeout(() => controller.abort(), 2600);
-    const response = await fetch("/api/icons", {
-      headers: { accept: "application/json" },
-      signal: controller.signal
-    });
-    window.clearTimeout(timeout);
+    const response = await fetch("/api/icons", { headers: { accept: "application/json" } });
     if (response.ok) {
       const payload = await response.json();
       if (Array.isArray(payload.icons)) {
@@ -514,8 +505,6 @@ async function loadIconsFromDatabase() {
     }
   } catch {
     // Static local preview does not have EdgeOne Functions; fall back below.
-  } finally {
-    if (timeout) window.clearTimeout(timeout);
   }
 
   const { supabaseUrl, anonKey, enabled } = getSupabaseConfig();
@@ -687,10 +676,7 @@ function updateSphereLayout() {
 
   els.iconNet.style.setProperty("--sphere-cell", `${tileSize}px`);
 
-  const tiles = [...document.querySelectorAll(".icon-tile")];
-  let visibleCount = 0;
-
-  tiles.forEach((tile) => {
+  document.querySelectorAll(".icon-tile").forEach((tile) => {
     const gx = Number(tile.dataset.gx || 0);
     const gy = Number(tile.dataset.gy || 0);
     const rawX = gx * cellSize + state.sphere.x;
@@ -705,7 +691,6 @@ function updateSphereLayout() {
     }
 
     tile.style.visibility = "visible";
-    visibleCount += 1;
 
     let projectedX = rawX;
     let projectedY = rawY;
@@ -727,14 +712,6 @@ function updateSphereLayout() {
     tile.style.zIndex = String(Math.max(1, z));
     tile.style.transform = `translate3d(${(cx + projectedX - tileSize / 2).toFixed(2)}px, ${(cy + projectedY - tileSize / 2).toFixed(2)}px, 0) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
   });
-
-  els.netStage.classList.toggle("is-live", visibleCount > 0);
-
-  if (!visibleCount && tiles.length && (state.sphere.x || state.sphere.y)) {
-    state.sphere.x = 0;
-    state.sphere.y = 0;
-    updateSphereLayout();
-  }
 }
 
 function startInertia() {
@@ -962,5 +939,4 @@ window.addEventListener("resize", updateSphereLayout);
 
 setupEffectControls();
 setupSphereInteraction();
-render();
 loadIconsFromDatabase().then(render);
