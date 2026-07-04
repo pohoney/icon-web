@@ -367,10 +367,22 @@ const els = {
 function loadEffectSettings() {
   const defaults = { spread: 100, droop: 100, depth: 100, scale: 100 };
   try {
-    return { ...defaults, ...JSON.parse(localStorage.getItem("ICON_EFFECT_SETTINGS") || "{}") };
+    const saved = { ...defaults, ...JSON.parse(localStorage.getItem("ICON_EFFECT_SETTINGS") || "{}") };
+    return {
+      spread: clampNumber(saved.spread, 0, 180, defaults.spread),
+      droop: clampNumber(saved.droop, 0, 180, defaults.droop),
+      depth: clampNumber(saved.depth, 0, 180, defaults.depth),
+      scale: clampNumber(saved.scale, 70, 140, defaults.scale)
+    };
   } catch {
     return defaults;
   }
+}
+
+function clampNumber(value, min, max, fallback) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return fallback;
+  return Math.min(max, Math.max(min, number));
 }
 
 function saveEffectSettings() {
@@ -539,16 +551,27 @@ function imageSlot(icon, size = "tile") {
 
 function preloadIcon(icon) {
   if (state.imageStatus.has(icon.id)) return;
+  if (!icon.thumb && !icon.image) {
+    state.imageStatus.set(icon.id, "missing");
+    return;
+  }
   const image = new Image();
   image.onload = () => {
     state.imageStatus.set(icon.id, "loaded");
-    render();
+    updateIconArt(icon);
   };
   image.onerror = () => {
     state.imageStatus.set(icon.id, "missing");
-    render();
   };
   image.src = icon.thumb || icon.image;
+}
+
+function updateIconArt(icon) {
+  const tile = document.querySelector(`.icon-tile[data-id="${CSS.escape(icon.id)}"] .tile-art`);
+  if (tile) tile.innerHTML = imageSlot(icon);
+  if (state.selected?.id === icon.id && els.dialog.open) {
+    els.detailPreview.innerHTML = imageSlot(icon, "detail");
+  }
 }
 
 function renderNet() {
@@ -565,9 +588,9 @@ function renderNet() {
     const col = index % 4;
     const rowPower = Math.pow(row, 1.36);
     const side = col - 1.5;
-    const spread = state.effect.spread / 100;
-    const droop = state.effect.droop / 100;
-    const depth = state.effect.depth / 100;
+    const spread = clampNumber(state.effect.spread, 0, 180, 100) / 100;
+    const droop = clampNumber(state.effect.droop, 0, 180, 100) / 100;
+    const depth = clampNumber(state.effect.depth, 0, 180, 100) / 100;
     const sway = row === 0 ? 0 : ((index * 37) % 19) - 9;
     const fan = side * rowPower * 24 * spread;
     const drop = row === 0 ? 0 : (rowPower * 34 + Math.abs(side) * row * 18) * droop;
@@ -617,8 +640,8 @@ function updateNetProgress() {
     const fan = Number(tile.dataset.fan || 0);
     const drop = Number(tile.dataset.drop || 0);
     const tilt = Number(tile.dataset.tilt || 0);
-    const depth = state.effect.depth / 100;
-    const scaleEffect = state.effect.scale / 100;
+    const depth = clampNumber(state.effect.depth, 0, 180, 100) / 100;
+    const scaleEffect = clampNumber(state.effect.scale, 70, 140, 100) / 100;
     const tension = 1 - flatten;
     const x = (sway + fan) * tension;
     const y = drop * tension;
