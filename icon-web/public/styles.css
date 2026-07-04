@@ -232,6 +232,17 @@ button {
     radial-gradient(ellipse 78% 74% at center, rgba(255, 255, 255, 0) 36%, rgba(255, 255, 255, 0.62) 78%, #f7f8f2 100%);
 }
 
+.net-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #f7f8f2 0%, rgba(247, 248, 242, 0.92) 3%, rgba(247, 248, 242, 0) 16%, rgba(247, 248, 242, 0) 84%, rgba(247, 248, 242, 0.92) 97%, #f7f8f2 100%),
+    linear-gradient(180deg, #f7f8f2 0%, rgba(247, 248, 242, 0.86) 4%, rgba(247, 248, 242, 0) 18%, rgba(247, 248, 242, 0) 82%, rgba(247, 248, 242, 0.9) 96%, #f7f8f2 100%);
+}
+
 .net-stage:active {
   cursor: grabbing;
 }
@@ -253,25 +264,18 @@ button {
   place-items: center;
   width: var(--sphere-cell);
   height: var(--sphere-cell);
-  border: 1px solid rgba(23, 25, 20, 0.13);
-  border-radius: var(--radius);
-  background:
-    radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.28) 42%, transparent 68%),
-    rgba(255, 255, 251, 0.72);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: var(--ink);
-  box-shadow:
-    0 20px 48px rgba(34, 42, 24, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow: none;
   transform: translate3d(0, 0, 0) scale(0.9);
   transform-origin: 50% 50%;
   will-change: transform, opacity;
-  transition:
-    border-color 170ms ease,
-    box-shadow 170ms ease,
-    background 170ms ease;
+  transition: filter 170ms ease;
   animation: tileIn 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: calc(var(--i) * 22ms);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .icon-tile::before,
@@ -282,19 +286,15 @@ button {
 }
 
 .icon-tile::before {
-  inset: 0;
-  background:
-    linear-gradient(90deg, transparent 49.7%, rgba(49, 95, 72, 0.13) 50%, transparent 50.3%),
-    linear-gradient(180deg, transparent 49.7%, rgba(49, 95, 72, 0.13) 50%, transparent 50.3%);
-  opacity: 0.28;
+  display: none;
 }
 
 .tile-art {
   display: grid;
   place-items: center;
-  width: 66%;
+  width: 74%;
   aspect-ratio: 1;
-  margin-top: 13px;
+  margin-top: 4px;
   transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -358,17 +358,11 @@ button {
 }
 
 .icon-tile:hover {
-  border-color: rgba(23, 25, 20, 0.34);
-  background:
-    radial-gradient(circle at 50% 8%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.34) 50%, transparent 72%),
-    #fffffb;
-  box-shadow:
-    0 28px 64px rgba(34, 42, 24, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  filter: drop-shadow(0 22px 34px rgba(31, 42, 21, 0.16));
 }
 
 .icon-tile:hover .tile-art {
-  transform: translateY(-8px) scale(1.05);
+  transform: translateY(-4px) scale(1.05);
 }
 
 .tile-label {
@@ -377,8 +371,11 @@ button {
   display: grid;
   gap: 4px;
   width: 100%;
-  padding: 0 10px 12px;
+  padding: 0 4px 8px;
   text-align: center;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.78),
+    0 10px 18px rgba(31, 42, 21, 0.12);
 }
 
 .tile-label strong,

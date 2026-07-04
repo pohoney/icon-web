@@ -351,6 +351,8 @@ const state = {
 };
 
 let iconData = [...fallbackIconData];
+const EFFECT_SETTINGS_KEY = "ICON_EFFECT_SETTINGS_V3";
+const DEFAULT_EFFECT_SETTINGS = { gap: 10, size: 138, perspective: 160, stretch: 146 };
 
 const els = {
   search: document.querySelector("#searchInput"),
@@ -378,9 +380,9 @@ const els = {
 };
 
 function loadEffectSettings() {
-  const defaults = { gap: 50, size: 100, perspective: 100, stretch: 100 };
+  const defaults = DEFAULT_EFFECT_SETTINGS;
   try {
-    const raw = JSON.parse(localStorage.getItem("ICON_EFFECT_SETTINGS") || "{}");
+    const raw = JSON.parse(localStorage.getItem(EFFECT_SETTINGS_KEY) || "{}");
     const saved = {
       ...defaults,
       ...raw,
@@ -407,7 +409,7 @@ function clampNumber(value, min, max, fallback) {
 }
 
 function saveEffectSettings() {
-  localStorage.setItem("ICON_EFFECT_SETTINGS", JSON.stringify(state.effect));
+  localStorage.setItem(EFFECT_SETTINGS_KEY, JSON.stringify(state.effect));
 }
 
 function setupEffectControls() {
@@ -423,7 +425,7 @@ function setupEffectControls() {
   });
 
   els.resetEffect?.addEventListener("click", () => {
-    state.effect = { gap: 50, size: 100, perspective: 100, stretch: 100 };
+    state.effect = { ...DEFAULT_EFFECT_SETTINGS };
     saveEffectSettings();
     els.effectSliders.forEach((slider) => {
       const key = slider.dataset.effect;
