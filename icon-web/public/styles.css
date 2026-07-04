@@ -53,7 +53,7 @@ button {
 }
 
 .app-shell {
-  min-height: 170dvh;
+  min-height: 100dvh;
 }
 
 .topbar {
@@ -195,7 +195,8 @@ button {
 
 .stage-shell {
   position: relative;
-  padding: 112px 28px 120px;
+  min-height: 100dvh;
+  padding: 112px 28px 56px;
 }
 
 .intro-strip {
@@ -217,41 +218,40 @@ button {
 .net-stage {
   position: relative;
   max-width: 1280px;
-  min-height: 1360px;
+  height: min(860px, calc(100dvh - 172px));
+  min-height: 560px;
   margin: 0 auto;
-  padding: 26px 0 160px;
+  padding: 0;
   perspective: 1300px;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  background:
+    radial-gradient(ellipse 78% 74% at center, rgba(255, 255, 255, 0) 36%, rgba(255, 255, 255, 0.62) 78%, #f7f8f2 100%);
 }
 
-.net-stage::before {
-  content: "";
-  position: sticky;
-  z-index: 0;
-  top: 96px;
-  display: block;
-  height: 1px;
-  margin: 0 4vw;
-  background: linear-gradient(90deg, transparent, rgba(23, 25, 20, 0.28), transparent);
+.net-stage:active {
+  cursor: grabbing;
 }
 
 .icon-net {
-  --flatten: 0;
-  position: relative;
+  --sphere-cell: 144px;
+  position: absolute;
+  inset: 0;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(150px, 1fr));
-  column-gap: clamp(14px, calc(30px - var(--flatten) * 12px), 30px);
-  row-gap: 42px;
-  padding-top: 14px;
   transform-style: preserve-3d;
 }
 
 .icon-tile {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
   place-items: center;
-  min-height: clamp(156px, 17vw, 232px);
+  width: var(--sphere-cell);
+  height: var(--sphere-cell);
   border: 1px solid rgba(23, 25, 20, 0.13);
   border-radius: var(--radius);
   background:
@@ -259,9 +259,11 @@ button {
     rgba(255, 255, 251, 0.72);
   color: var(--ink);
   box-shadow:
-    0 calc(20px + var(--row) * 3px) 48px rgba(34, 42, 24, 0.08),
+    0 20px 48px rgba(34, 42, 24, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
   transform: translate3d(0, 0, 0) scale(0.9);
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
   transition:
     border-color 170ms ease,
     box-shadow 170ms ease,
@@ -283,48 +285,15 @@ button {
   background:
     linear-gradient(90deg, transparent 49.7%, rgba(49, 95, 72, 0.13) 50%, transparent 50.3%),
     linear-gradient(180deg, transparent 49.7%, rgba(49, 95, 72, 0.13) 50%, transparent 50.3%);
-  opacity: calc(0.28 + var(--flatten) * 0.24);
-}
-
-.icon-tile::after {
-  top: 0;
-  left: 50%;
-  width: 1px;
-  height: calc(var(--drop) + 34px);
-  background: linear-gradient(rgba(23, 25, 20, 0.22), transparent);
-  transform: translate(-50%, -100%);
-  opacity: calc(1 - var(--flatten));
-}
-
-.icon-tile:nth-child(-n + 4) {
-  box-shadow:
-    0 14px 36px rgba(34, 42, 24, 0.07),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
-}
-
-.icon-tile:nth-child(-n + 4)::after,
-.icon-tile:nth-child(-n + 4) .tile-pin {
-  opacity: 0;
-}
-
-.tile-pin {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: var(--ink);
-  opacity: calc(0.34 * (1 - var(--flatten)));
-  transform: translateX(-50%);
+  opacity: 0.28;
 }
 
 .tile-art {
   display: grid;
   place-items: center;
-  width: min(68%, 148px);
+  width: 66%;
   aspect-ratio: 1;
-  margin-top: 18px;
+  margin-top: 13px;
   transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -407,7 +376,7 @@ button {
   display: grid;
   gap: 4px;
   width: 100%;
-  padding: 0 14px 16px;
+  padding: 0 10px 12px;
   text-align: center;
 }
 
@@ -419,12 +388,12 @@ button {
 }
 
 .tile-label strong {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .tile-label small {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .empty-state {
@@ -701,8 +670,9 @@ button {
     gap: 8px;
   }
 
-  .icon-net {
-    grid-template-columns: repeat(2, minmax(130px, 1fr));
+  .net-stage {
+    height: min(720px, calc(100dvh - 250px));
+    min-height: 460px;
   }
 
   .detail-card {
@@ -734,11 +704,7 @@ button {
     padding-inline: 14px;
   }
 
-  .icon-net {
-    gap: 12px;
-  }
-
-  .icon-tile {
-    min-height: 164px;
+  .net-stage {
+    min-height: 420px;
   }
 }

@@ -334,6 +334,19 @@ const state = {
   loading: true,
   source: "local",
   effect: loadEffectSettings(),
+  sphere: {
+    x: 0,
+    y: 0,
+    vx: 0,
+    vy: 0,
+    dragging: false,
+    moved: 0,
+    suppressClick: false,
+    lastX: 0,
+    lastY: 0,
+    lastTime: 0,
+    raf: null
+  },
   imageStatus: new Map()
 };
 
@@ -583,18 +596,9 @@ function renderNet() {
 
   icons.forEach(preloadIcon);
 
-  els.iconNet.innerHTML = icons.map((icon, index) => {
-    const row = Math.floor(index / 4);
-    const col = index % 4;
-    const rowPower = Math.pow(row, 1.36);
-    const side = col - 1.5;
-    const spread = clampNumber(state.effect.spread, 0, 180, 100) / 100;
-    const droop = clampNumber(state.effect.droop, 0, 180, 100) / 100;
-    const depth = clampNumber(state.effect.depth, 0, 180, 100) / 100;
-    const sway = row === 0 ? 0 : ((index * 37) % 19) - 9;
-    const fan = side * rowPower * 24 * spread;
-    const drop = row === 0 ? 0 : (rowPower * 34 + Math.abs(side) * row * 18) * droop;
-    const rotate = row === 0 ? 0 : (side * row * 3.8 + (index % 3 - 1) * 2.2) * depth;
+  const cells = buildSphereCells(icons);
+
+  els.iconNet.innerHTML = cells.map(({ icon, gx, gy }, index) => {
     const title = label(icon, "title");
     const tags = getTags(icon).slice(0, 2).join(" / ");
 
@@ -603,15 +607,11 @@ function renderNet() {
         class="icon-tile"
         type="button"
         data-id="${icon.id}"
-        data-row="${row}"
-        data-sway="${sway}"
-        data-fan="${fan}"
-        data-drop="${drop}"
-        data-tilt="${rotate}"
-        style="--i:${index}; --row:${row}; --col:${col}; --sway:${sway}px; --fan:${fan}px; --drop:${drop}px; --tilt:${rotate}deg"
+        data-gx="${gx}"
+        data-gy="${gy}"
+        style="--i:${index}"
         aria-label="${title}"
       >
-        <span class="tile-pin"></span>
         <span class="tile-art">${imageSlot(icon)}</span>
         <span class="tile-label">
           <strong>${title}</strong>
@@ -622,35 +622,157 @@ function renderNet() {
   }).join("");
 
   document.querySelectorAll(".icon-tile").forEach((tile) => {
-    tile.addEventListener("click", () => openDetail(tile.dataset.id));
+    tile.addEventListener("click", () => {
+      if (state.sphere.suppressClick) return;
+      openDetail(tile.dataset.id);
+    });
   });
-  updateNetProgress();
+  updateSphereLayout();
 }
 
-function updateNetProgress() {
-  const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  const pageProgress = Math.min(1, Math.max(0, window.scrollY / max));
-  const localTop = els.netStage.getBoundingClientRect().top;
-  const localProgress = Math.min(1, Math.max(0, (window.innerHeight * 0.72 - localTop) / (window.innerHeight * 0.9)));
-  const flatten = Math.max(pageProgress, localProgress);
-  els.iconNet.style.setProperty("--flatten", flatten.toFixed(3));
+function buildSphereCells(icons) {
+  if (!icons.length) return [];
+  const cells = [];
+  const cols = 13;
+  const rows = 9;
+  let index = 0;
+  for (let gy = -Math.floor(rows / 2); gy <= Math.floor(rows / 2); gy += 1) {
+    for (let gx = -Math.floor(cols / 2); gx <= Math.floor(cols / 2); gx += 1) {
+      const radius = Math.hypot(gx / (cols / 2), gy / (rows / 2));
+      if (radius <= 1.18) {
+        cells.push({ icon: icons[index % icons.length], gx, gy });
+        index += 1;
+      }
+    }
+  }
+  return cells;
+}
+
+function updateSphereLayout() {
+  const rect = els.netStage.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+
+  const spread = clampNumber(state.effect.spread, 0, 180, 100) / 100;
+  const lens = clampNumber(state.effect.droop, 0, 180, 100) / 100;
+  const depth = clampNumber(state.effect.depth, 0, 180, 100) / 100;
+  const scaleEffect = clampNumber(state.effect.scale, 70, 140, 100) / 100;
+  const radius = Math.min(rect.width, rect.height) * (0.46 + spread * 0.08);
+  const cellSize = Math.min(rect.width, rect.height) * (0.13 + spread * 0.018);
+  const tileSize = Math.min(176, Math.max(112, cellSize * 0.9));
+  const cx = rect.width / 2;
+  const cy = rect.height / 2;
+
+  els.iconNet.style.setProperty("--sphere-cell", `${tileSize}px`);
+
   document.querySelectorAll(".icon-tile").forEach((tile) => {
-    const row = Number(tile.dataset.row || 0);
-    const sway = Number(tile.dataset.sway || 0);
-    const fan = Number(tile.dataset.fan || 0);
-    const drop = Number(tile.dataset.drop || 0);
-    const tilt = Number(tile.dataset.tilt || 0);
-    const depth = clampNumber(state.effect.depth, 0, 180, 100) / 100;
-    const scaleEffect = clampNumber(state.effect.scale, 70, 140, 100) / 100;
-    const tension = 1 - flatten;
-    const x = (sway + fan) * tension;
-    const y = drop * tension;
-    const z = -row * tension * 26 * depth;
-    const rotateX = (3 + row * 2.8) * tension * depth;
-    const rotateZ = tilt * tension;
-    const scale = (0.84 + flatten * 0.16 + Math.min(row, 6) * 0.012 * tension) * scaleEffect;
-    tile.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateX(${rotateX.toFixed(2)}deg) rotateZ(${rotateZ.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+    const gx = Number(tile.dataset.gx || 0);
+    const gy = Number(tile.dataset.gy || 0);
+    const rawX = gx * cellSize + state.sphere.x;
+    const rawY = gy * cellSize + state.sphere.y;
+    const distance = Math.hypot(rawX, rawY);
+
+    if (distance > radius * 1.7) {
+      tile.style.visibility = "hidden";
+      return;
+    }
+
+    tile.style.visibility = "visible";
+
+    let projectedX = rawX;
+    let projectedY = rawY;
+    if (distance > 0.001) {
+      const projection = (radius * Math.tanh((distance / radius) * lens)) / distance;
+      projectedX = rawX * projection;
+      projectedY = rawY * projection;
+    }
+
+    const curve = Math.cosh(distance / radius);
+    const centerWeight = Math.max(0, 1 - distance / (radius * 0.92));
+    const scale = Math.max(0.2, (1.18 / (curve * curve)) * (1 + centerWeight * 0.2 * depth)) * scaleEffect;
+    const opacity = Math.max(0.24, 1 / (curve * curve * 0.58 + 0.42));
+    const z = Math.round((1 - distance / radius) * 1000);
+    const rotateX = (-projectedY / radius) * 10 * depth;
+    const rotateY = (projectedX / radius) * 10 * depth;
+
+    tile.style.opacity = opacity.toFixed(3);
+    tile.style.zIndex = String(Math.max(1, z));
+    tile.style.transform = `translate3d(${(cx + projectedX - tileSize / 2).toFixed(2)}px, ${(cy + projectedY - tileSize / 2).toFixed(2)}px, 0) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
   });
+}
+
+function startInertia() {
+  if (state.sphere.raf) cancelAnimationFrame(state.sphere.raf);
+  const step = () => {
+    if (Math.hypot(state.sphere.vx, state.sphere.vy) < 0.06) {
+      state.sphere.vx = 0;
+      state.sphere.vy = 0;
+      state.sphere.raf = null;
+      return;
+    }
+    state.sphere.x += state.sphere.vx;
+    state.sphere.y += state.sphere.vy;
+    state.sphere.vx *= 0.94;
+    state.sphere.vy *= 0.94;
+    updateSphereLayout();
+    state.sphere.raf = requestAnimationFrame(step);
+  };
+  state.sphere.raf = requestAnimationFrame(step);
+}
+
+function setupSphereInteraction() {
+  els.netStage.addEventListener("pointerdown", (event) => {
+    state.sphere.dragging = true;
+    state.sphere.moved = 0;
+    state.sphere.lastX = event.clientX;
+    state.sphere.lastY = event.clientY;
+    state.sphere.lastTime = performance.now();
+    state.sphere.vx = 0;
+    state.sphere.vy = 0;
+    if (state.sphere.raf) cancelAnimationFrame(state.sphere.raf);
+    els.netStage.setPointerCapture?.(event.pointerId);
+  });
+
+  els.netStage.addEventListener("pointermove", (event) => {
+    if (!state.sphere.dragging) return;
+    const now = performance.now();
+    const dx = event.clientX - state.sphere.lastX;
+    const dy = event.clientY - state.sphere.lastY;
+    const dt = Math.max(8, now - state.sphere.lastTime);
+    state.sphere.x += dx;
+    state.sphere.y += dy;
+    state.sphere.vx = 0.72 * (dx / dt) * 16 + 0.28 * state.sphere.vx;
+    state.sphere.vy = 0.72 * (dy / dt) * 16 + 0.28 * state.sphere.vy;
+    state.sphere.moved += Math.abs(dx) + Math.abs(dy);
+    state.sphere.lastX = event.clientX;
+    state.sphere.lastY = event.clientY;
+    state.sphere.lastTime = now;
+    updateSphereLayout();
+  });
+
+  const endDrag = (event) => {
+    if (!state.sphere.dragging) return;
+    state.sphere.dragging = false;
+    if (state.sphere.moved > 8) {
+      state.sphere.suppressClick = true;
+      window.setTimeout(() => {
+        state.sphere.suppressClick = false;
+      }, 0);
+    }
+    els.netStage.releasePointerCapture?.(event.pointerId);
+    startInertia();
+  };
+
+  els.netStage.addEventListener("pointerup", endDrag);
+  els.netStage.addEventListener("pointerleave", endDrag);
+
+  els.netStage.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    state.sphere.x -= event.deltaX;
+    state.sphere.y -= event.deltaY;
+    state.sphere.vx = 0;
+    state.sphere.vy = 0;
+    updateSphereLayout();
+  }, { passive: false });
 }
 
 function render() {
@@ -799,8 +921,8 @@ els.home.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-window.addEventListener("scroll", updateNetProgress, { passive: true });
-window.addEventListener("resize", updateNetProgress);
+window.addEventListener("resize", updateSphereLayout);
 
 setupEffectControls();
+setupSphereInteraction();
 loadIconsFromDatabase().then(render);
