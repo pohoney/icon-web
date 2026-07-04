@@ -494,8 +494,15 @@ function mapDbIcon(row) {
 }
 
 async function loadIconsFromDatabase() {
+  let timeout = null;
   try {
-    const response = await fetch("/api/icons", { headers: { accept: "application/json" } });
+    const controller = new AbortController();
+    timeout = window.setTimeout(() => controller.abort(), 2600);
+    const response = await fetch("/api/icons", {
+      headers: { accept: "application/json" },
+      signal: controller.signal
+    });
+    window.clearTimeout(timeout);
     if (response.ok) {
       const payload = await response.json();
       if (Array.isArray(payload.icons)) {
@@ -507,6 +514,8 @@ async function loadIconsFromDatabase() {
     }
   } catch {
     // Static local preview does not have EdgeOne Functions; fall back below.
+  } finally {
+    if (timeout) window.clearTimeout(timeout);
   }
 
   const { supabaseUrl, anonKey, enabled } = getSupabaseConfig();
@@ -678,7 +687,10 @@ function updateSphereLayout() {
 
   els.iconNet.style.setProperty("--sphere-cell", `${tileSize}px`);
 
-  document.querySelectorAll(".icon-tile").forEach((tile) => {
+  const tiles = [...document.querySelectorAll(".icon-tile")];
+  let visibleCount = 0;
+
+  tiles.forEach((tile) => {
     const gx = Number(tile.dataset.gx || 0);
     const gy = Number(tile.dataset.gy || 0);
     const rawX = gx * cellSize + state.sphere.x;
@@ -693,6 +705,7 @@ function updateSphereLayout() {
     }
 
     tile.style.visibility = "visible";
+    visibleCount += 1;
 
     let projectedX = rawX;
     let projectedY = rawY;
@@ -714,6 +727,12 @@ function updateSphereLayout() {
     tile.style.zIndex = String(Math.max(1, z));
     tile.style.transform = `translate3d(${(cx + projectedX - tileSize / 2).toFixed(2)}px, ${(cy + projectedY - tileSize / 2).toFixed(2)}px, 0) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
   });
+
+  if (!visibleCount && tiles.length && (state.sphere.x || state.sphere.y)) {
+    state.sphere.x = 0;
+    state.sphere.y = 0;
+    updateSphereLayout();
+  }
 }
 
 function startInertia() {
@@ -941,4 +960,5 @@ window.addEventListener("resize", updateSphereLayout);
 
 setupEffectControls();
 setupSphereInteraction();
+render();
 loadIconsFromDatabase().then(render);
