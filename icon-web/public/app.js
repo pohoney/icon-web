@@ -665,8 +665,9 @@ function updateSphereLayout() {
   const perspectiveEffect = clampNumber(state.effect.perspective, 0, 180, 100) / 100;
   const stretchEffect = clampNumber(state.effect.stretch, 60, 150, 100) / 100;
   const minSide = Math.min(rect.width, rect.height);
-  const tileSize = Math.min(184, Math.max(88, minSide * 0.145 * sizeEffect));
-  const cellSize = tileSize * (1 + gapRatio);
+  const tileSize = Math.min(184, Math.max(82, minSide * 0.14 * sizeEffect));
+  const safetyGap = 0.08 + perspectiveEffect * 0.04;
+  const cellSize = tileSize * (1 + gapRatio + safetyGap);
   const radiusX = Math.max(tileSize * 2.4, rect.width * 0.49);
   const radiusY = Math.max(tileSize * 2.4, rect.height * 0.49 * stretchEffect);
   const lens = 0.78 + perspectiveEffect * 0.48;
@@ -701,7 +702,7 @@ function updateSphereLayout() {
 
     const curve = Math.cosh(distance);
     const centerWeight = Math.max(0, 1 - distance / 0.92);
-    const scale = Math.max(0.18, (1.16 / (curve * curve)) * (1 + centerWeight * 0.22 * perspectiveEffect));
+    const scale = Math.min(1.04, Math.max(0.22, (1.04 / (curve * curve)) * (1 + centerWeight * 0.08 * perspectiveEffect)));
     const opacity = Math.max(0.24, 1 / (curve * curve * 0.58 + 0.42));
     const z = Math.round((1 - distance) * 1000);
     const rotateX = (-projectedY / radiusY) * 12 * perspectiveEffect;
