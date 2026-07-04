@@ -351,8 +351,8 @@ const state = {
 };
 
 let iconData = [...fallbackIconData];
-const EFFECT_SETTINGS_KEY = "ICON_EFFECT_SETTINGS_V3";
-const DEFAULT_EFFECT_SETTINGS = { gap: 10, size: 138, perspective: 160, stretch: 146 };
+const EFFECT_SETTINGS_KEY = "ICON_EFFECT_SETTINGS_V4";
+const DEFAULT_EFFECT_SETTINGS = { gap: 14, size: 126, perspective: 160, stretch: 146 };
 
 const els = {
   search: document.querySelector("#searchInput"),
