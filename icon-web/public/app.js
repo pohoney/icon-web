@@ -728,6 +728,8 @@ function updateSphereLayout() {
     tile.style.transform = `translate3d(${(cx + projectedX - tileSize / 2).toFixed(2)}px, ${(cy + projectedY - tileSize / 2).toFixed(2)}px, 0) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
   });
 
+  els.netStage.classList.toggle("is-live", visibleCount > 0);
+
   if (!visibleCount && tiles.length && (state.sphere.x || state.sphere.y)) {
     state.sphere.x = 0;
     state.sphere.y = 0;

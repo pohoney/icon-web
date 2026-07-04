@@ -247,11 +247,72 @@ button {
   cursor: grabbing;
 }
 
+.static-icon-preview {
+  position: absolute;
+  inset: 10% 9%;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(82px, 1fr));
+  place-items: center;
+  gap: clamp(24px, 5vw, 72px);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 180ms ease;
+}
+
+.net-stage.is-live .static-icon-preview {
+  opacity: 0;
+}
+
+.static-icon-sample {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(72px, 9vw, 132px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(101, 130, 34, 0.28);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 20%, #ffffff 0%, #efff91 26%, #b7d944 56%, #70872d 100%);
+  box-shadow:
+    inset -18px -22px 42px rgba(39, 54, 20, 0.32),
+    inset 18px 18px 30px rgba(255, 255, 255, 0.52),
+    0 18px 34px rgba(31, 42, 21, 0.18);
+}
+
+.static-icon-sample::before,
+.static-icon-sample::after {
+  content: "";
+  position: absolute;
+  width: 44%;
+  height: 76%;
+  border: 3px solid rgba(255, 255, 255, 0.64);
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+}
+
+.static-icon-sample::before {
+  left: 10%;
+}
+
+.static-icon-sample::after {
+  right: 10%;
+}
+
+.static-icon-sample span {
+  z-index: 1;
+  color: rgba(23, 25, 20, 0.78);
+  font-size: clamp(28px, 4.2vw, 54px);
+  font-weight: 900;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
 .icon-net {
   --sphere-cell: 144px;
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 3;
   transform-style: preserve-3d;
 }
 
