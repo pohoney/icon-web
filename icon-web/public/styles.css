@@ -217,9 +217,10 @@ button {
 
 .net-stage {
   position: relative;
+  width: 100%;
   max-width: 1280px;
-  height: min(860px, calc(100dvh - 172px));
-  min-height: 560px;
+  height: min(920px, calc(100dvh - 148px));
+  min-height: 620px;
   margin: 0 auto;
   padding: 0;
   perspective: 1300px;

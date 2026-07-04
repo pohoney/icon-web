@@ -378,14 +378,22 @@ const els = {
 };
 
 function loadEffectSettings() {
-  const defaults = { spread: 100, droop: 100, depth: 100, scale: 100 };
+  const defaults = { gap: 50, size: 100, perspective: 100, stretch: 100 };
   try {
-    const saved = { ...defaults, ...JSON.parse(localStorage.getItem("ICON_EFFECT_SETTINGS") || "{}") };
+    const raw = JSON.parse(localStorage.getItem("ICON_EFFECT_SETTINGS") || "{}");
+    const saved = {
+      ...defaults,
+      ...raw,
+      gap: raw.gap ?? (Number.isFinite(Number(raw.spread)) ? Math.round(Number(raw.spread) * 0.5) : defaults.gap),
+      size: raw.size ?? raw.scale ?? defaults.size,
+      perspective: raw.perspective ?? raw.depth ?? defaults.perspective,
+      stretch: raw.stretch ?? defaults.stretch
+    };
     return {
-      spread: clampNumber(saved.spread, 0, 180, defaults.spread),
-      droop: clampNumber(saved.droop, 0, 180, defaults.droop),
-      depth: clampNumber(saved.depth, 0, 180, defaults.depth),
-      scale: clampNumber(saved.scale, 70, 140, defaults.scale)
+      gap: clampNumber(saved.gap, 0, 120, defaults.gap),
+      size: clampNumber(saved.size, 70, 150, defaults.size),
+      perspective: clampNumber(saved.perspective, 0, 180, defaults.perspective),
+      stretch: clampNumber(saved.stretch, 60, 150, defaults.stretch)
     };
   } catch {
     return defaults;
@@ -415,7 +423,7 @@ function setupEffectControls() {
   });
 
   els.resetEffect?.addEventListener("click", () => {
-    state.effect = { spread: 100, droop: 100, depth: 100, scale: 100 };
+    state.effect = { gap: 50, size: 100, perspective: 100, stretch: 100 };
     saveEffectSettings();
     els.effectSliders.forEach((slider) => {
       const key = slider.dataset.effect;
@@ -652,13 +660,16 @@ function updateSphereLayout() {
   const rect = els.netStage.getBoundingClientRect();
   if (!rect.width || !rect.height) return;
 
-  const spread = clampNumber(state.effect.spread, 0, 180, 100) / 100;
-  const lens = clampNumber(state.effect.droop, 0, 180, 100) / 100;
-  const depth = clampNumber(state.effect.depth, 0, 180, 100) / 100;
-  const scaleEffect = clampNumber(state.effect.scale, 70, 140, 100) / 100;
-  const radius = Math.min(rect.width, rect.height) * (0.46 + spread * 0.08);
-  const cellSize = Math.min(rect.width, rect.height) * (0.13 + spread * 0.018);
-  const tileSize = Math.min(176, Math.max(112, cellSize * 0.9));
+  const gapRatio = clampNumber(state.effect.gap, 0, 120, 50) / 100;
+  const sizeEffect = clampNumber(state.effect.size, 70, 150, 100) / 100;
+  const perspectiveEffect = clampNumber(state.effect.perspective, 0, 180, 100) / 100;
+  const stretchEffect = clampNumber(state.effect.stretch, 60, 150, 100) / 100;
+  const minSide = Math.min(rect.width, rect.height);
+  const tileSize = Math.min(184, Math.max(88, minSide * 0.145 * sizeEffect));
+  const cellSize = tileSize * (1 + gapRatio);
+  const radiusX = Math.max(tileSize * 2.4, rect.width * 0.49);
+  const radiusY = Math.max(tileSize * 2.4, rect.height * 0.49 * stretchEffect);
+  const lens = 0.78 + perspectiveEffect * 0.48;
   const cx = rect.width / 2;
   const cy = rect.height / 2;
 
@@ -669,9 +680,11 @@ function updateSphereLayout() {
     const gy = Number(tile.dataset.gy || 0);
     const rawX = gx * cellSize + state.sphere.x;
     const rawY = gy * cellSize + state.sphere.y;
-    const distance = Math.hypot(rawX, rawY);
+    const normalizedX = rawX / radiusX;
+    const normalizedY = rawY / radiusY;
+    const distance = Math.hypot(normalizedX, normalizedY);
 
-    if (distance > radius * 1.7) {
+    if (distance > 2.25) {
       tile.style.visibility = "hidden";
       return;
     }
@@ -681,18 +694,18 @@ function updateSphereLayout() {
     let projectedX = rawX;
     let projectedY = rawY;
     if (distance > 0.001) {
-      const projection = (radius * Math.tanh((distance / radius) * lens)) / distance;
+      const projection = Math.tanh(distance * lens) / distance;
       projectedX = rawX * projection;
       projectedY = rawY * projection;
     }
 
-    const curve = Math.cosh(distance / radius);
-    const centerWeight = Math.max(0, 1 - distance / (radius * 0.92));
-    const scale = Math.max(0.2, (1.18 / (curve * curve)) * (1 + centerWeight * 0.2 * depth)) * scaleEffect;
+    const curve = Math.cosh(distance);
+    const centerWeight = Math.max(0, 1 - distance / 0.92);
+    const scale = Math.max(0.18, (1.16 / (curve * curve)) * (1 + centerWeight * 0.22 * perspectiveEffect));
     const opacity = Math.max(0.24, 1 / (curve * curve * 0.58 + 0.42));
-    const z = Math.round((1 - distance / radius) * 1000);
-    const rotateX = (-projectedY / radius) * 10 * depth;
-    const rotateY = (projectedX / radius) * 10 * depth;
+    const z = Math.round((1 - distance) * 1000);
+    const rotateX = (-projectedY / radiusY) * 12 * perspectiveEffect;
+    const rotateY = (projectedX / radiusX) * 12 * perspectiveEffect;
 
     tile.style.opacity = opacity.toFixed(3);
     tile.style.zIndex = String(Math.max(1, z));
