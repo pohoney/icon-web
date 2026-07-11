@@ -489,6 +489,10 @@ function getFilteredIcons() {
   return iconData.filter((icon) => {
     const categoryMatch = state.category === "all" || icon.category === state.category;
     return categoryMatch && matchesQuery(icon);
+  }).sort((a, b) => {
+    const sortA = Number.isFinite(Number(a.sort)) ? Number(a.sort) : 9999;
+    const sortB = Number.isFinite(Number(b.sort)) ? Number(b.sort) : 9999;
+    return sortA - sortB;
   });
 }
 
@@ -660,20 +664,20 @@ function renderNet() {
 
 function buildSphereCells(icons) {
   if (!icons.length) return [];
-  const cells = [];
-  const cols = 6;
-  const rows = 5;
-  for (let y = 0; y < rows; y += 1) {
-    for (let x = 0; x < cols; x += 1) {
-      const index = y * cols + x;
-      cells.push({
-        icon: icons[index % icons.length],
-        gx: x - (cols - 1) / 2,
-        gy: y - (rows - 1) / 2
-      });
-    }
-  }
-  return cells;
+  const count = icons.length;
+  const cols = Math.max(1, Math.ceil(Math.sqrt(count * 1.25)));
+  const rows = Math.max(1, Math.ceil(count / cols));
+  return icons.map((icon, index) => {
+    const x = index % cols;
+    const y = Math.floor(index / cols);
+    const rowCount = y === rows - 1 && count % cols ? count % cols : cols;
+    const rowOffset = (cols - rowCount) / 2;
+    return {
+      icon,
+      gx: x + rowOffset - (cols - 1) / 2,
+      gy: y - (rows - 1) / 2
+    };
+  });
 }
 
 function updateSphereLayout() {

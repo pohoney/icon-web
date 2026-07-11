@@ -1,25 +1,16 @@
-let icons = [];
+let savedIcons = [];
+let tableRows = [];
+let fileMap = new Map();
 
 const els = {
   token: document.querySelector("#adminToken"),
   saveToken: document.querySelector("#saveToken"),
   load: document.querySelector("#loadIcons"),
-  list: document.querySelector("#iconList"),
-  saveAll: document.querySelector("#saveAll"),
-  status: document.querySelector("#statusText"),
-  reset: document.querySelector("#resetForm"),
-  saveIcon: document.querySelector("#saveIcon"),
-  id: document.querySelector("#iconId"),
-  title: document.querySelector("#title"),
-  titleZh: document.querySelector("#titleZh"),
-  category: document.querySelector("#category"),
-  tags: document.querySelector("#tags"),
-  tagsZh: document.querySelector("#tagsZh"),
-  description: document.querySelector("#description"),
-  descriptionZh: document.querySelector("#descriptionZh"),
-  sort: document.querySelector("#sort"),
-  iconStatus: document.querySelector("#status"),
-  file: document.querySelector("#iconFile")
+  table: document.querySelector("#iconTable"),
+  uploadSelected: document.querySelector("#uploadSelected"),
+  resetTable: document.querySelector("#resetTable"),
+  folder: document.querySelector("#folderInput"),
+  status: document.querySelector("#statusText")
 };
 
 els.token.value = localStorage.getItem("ICON_ADMIN_TOKEN") || "";
@@ -35,11 +26,12 @@ function headers() {
   };
 }
 
-function splitTags(value) {
+function escapeHtml(value) {
   return String(value || "")
-    .split(",")
-    .map((item) => item.trim())
-    .filter(Boolean);
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 }
 
 function slug(value) {
@@ -51,18 +43,99 @@ function slug(value) {
     .replace(/^-|-$/g, "");
 }
 
+function fileNameFromPath(path) {
+  return String(path || "").split(/[\\/]/).pop();
+}
+
+function normalizeExisting(icon) {
+  return {
+    ...icon,
+    id: slug(icon.id),
+    sort: Number.isFinite(Number(icon.sort)) ? Number(icon.sort) : 9999,
+    status: icon.status === "hidden" ? "hidden" : "active"
+  };
+}
+
+async function loadManifest() {
+  const response = await fetch("./icon-upload-manifest.json", { cache: "no-store" });
+  if (!response.ok) throw new Error("无法读取 icon-upload-manifest.json");
+  const manifest = await response.json();
+  return Array.isArray(manifest.rows) ? manifest.rows : [];
+}
+
 async function loadIcons() {
   setStatus("正在读取 EdgeOne Blob 数据...");
   const response = await fetch("/api/icons?all=1", { headers: headers() });
   const payload = await response.json();
   if (!response.ok) throw new Error(payload.error || "读取失败");
-  icons = payload.icons || [];
-  renderList();
-  setStatus(`已读取 ${icons.length} 个 icon`);
+  savedIcons = (payload.icons || []).map(normalizeExisting);
+  await buildTable();
+  setStatus(`已读取 ${savedIcons.length} 个线上 icon，表格 ${tableRows.length} 行`);
+}
+
+async function buildTable() {
+  const manifestRows = await loadManifest();
+  const savedById = new Map(savedIcons.map((icon) => [icon.id, icon]));
+  const extraRows = savedIcons
+    .filter((icon) => !manifestRows.some((row) => slug(row.id) === icon.id))
+    .sort((a, b) => a.sort - b.sort)
+    .map((icon, index) => ({
+      order: manifestRows.length + index + 1,
+      id: icon.id,
+      title: icon.title || icon.id,
+      titleZh: icon.titleZh || icon.title || icon.id,
+      prompt: icon.description || icon.descriptionZh || "",
+      fileName: fileNameFromPath(icon.image || icon.thumb),
+      category: icon.category || "tennis",
+      tags: icon.tags || ["tennis", "gesture"],
+      tagsZh: icon.tagsZh || ["网球", "动作"],
+      sort: icon.sort,
+      status: icon.status || "active"
+    }));
+
+  tableRows = [...manifestRows, ...extraRows].map((row, index) => {
+    const id = slug(row.id);
+    const saved = savedById.get(id) || {};
+    const fileName = row.fileName || fileNameFromPath(row.iconPath) || `${id}.png`;
+    return {
+      order: index + 1,
+      id,
+      title: saved.title || row.title || id,
+      titleZh: saved.titleZh || row.titleZh || row.title || id,
+      prompt: saved.description || saved.descriptionZh || row.prompt || "",
+      fileName,
+      category: saved.category || row.category || "tennis",
+      tags: saved.tags || row.tags || ["tennis", "gesture"],
+      tagsZh: saved.tagsZh || row.tagsZh || ["网球", "动作"],
+      sort: (index + 1) * 10,
+      status: saved.status || row.status || "active",
+      image: saved.image || "",
+      thumb: saved.thumb || saved.image || "",
+      file: fileMap.get(fileName.toLowerCase()) || fileMap.get(`${id}.png`)
+    };
+  });
+  renderTable();
+}
+
+function rowToIcon(row) {
+  return {
+    id: row.id,
+    title: row.title,
+    titleZh: row.titleZh,
+    tags: row.tags,
+    tagsZh: row.tagsZh,
+    description: row.prompt,
+    descriptionZh: row.prompt,
+    image: row.image,
+    thumb: row.thumb || row.image,
+    category: row.category,
+    status: row.status,
+    sort: row.sort
+  };
 }
 
 async function saveIcons() {
-  setStatus("正在保存 icon 列表...");
+  const icons = tableRows.map(rowToIcon);
   const response = await fetch("/api/icons", {
     method: "POST",
     headers: headers(),
@@ -70,88 +143,92 @@ async function saveIcons() {
   });
   const payload = await response.json();
   if (!response.ok) throw new Error(payload.error || "保存失败");
-  icons = payload.icons || icons;
-  renderList();
-  setStatus(`已保存 ${payload.count} 个 icon`);
+  savedIcons = (payload.icons || icons).map(normalizeExisting);
+  setStatus(`已保存 ${payload.count} 个 icon，前台会按当前表格顺序展示`);
 }
 
-async function uploadFile(id, file) {
+async function uploadFile(row) {
+  if (!row.file) return row.image || "";
   const response = await fetch("/api/upload-url", {
     method: "POST",
     headers: headers(),
-    body: JSON.stringify({ id, contentType: file.type || "image/png" })
+    body: JSON.stringify({ id: row.id, contentType: row.file.type || "image/png" })
   });
   const payload = await response.json();
   if (!response.ok) throw new Error(payload.error || "获取上传地址失败");
 
   const upload = await fetch(payload.url, {
     method: "PUT",
-    body: file,
+    body: row.file,
     headers: { "content-type": payload.contentType }
   });
-  if (!upload.ok) throw new Error("图片上传失败");
+  if (!upload.ok) throw new Error(`${row.id} 图片上传失败`);
+  row.image = payload.assetUrl;
+  row.thumb = payload.assetUrl;
   return payload.assetUrl;
 }
 
-function formToIcon(existing = {}) {
-  const id = slug(els.id.value);
-  return {
-    ...existing,
-    id,
-    title: els.title.value.trim() || id,
-    titleZh: els.titleZh.value.trim() || els.title.value.trim() || id,
-    category: els.category.value.trim() || "tennis",
-    tags: splitTags(els.tags.value),
-    tagsZh: splitTags(els.tagsZh.value),
-    description: els.description.value.trim(),
-    descriptionZh: els.descriptionZh.value.trim(),
-    sort: Number(els.sort.value || 9999),
-    status: els.iconStatus.value
-  };
+function previewFor(row) {
+  if (row.file) return URL.createObjectURL(row.file);
+  return row.thumb || row.image || "";
 }
 
-function fillForm(icon) {
-  els.id.value = icon.id || "";
-  els.title.value = icon.title || "";
-  els.titleZh.value = icon.titleZh || "";
-  els.category.value = icon.category || "tennis";
-  els.tags.value = (icon.tags || []).join(",");
-  els.tagsZh.value = (icon.tagsZh || []).join(",");
-  els.description.value = icon.description || "";
-  els.descriptionZh.value = icon.descriptionZh || "";
-  els.sort.value = icon.sort ?? 100;
-  els.iconStatus.value = icon.status || "active";
-  els.file.value = "";
-}
+function renderTable() {
+  els.table.innerHTML = tableRows.map((row, index) => {
+    const preview = previewFor(row);
+    return `
+      <tr data-index="${index}">
+        <td class="order-cell">${row.order}</td>
+        <td class="preview-cell">${preview ? `<img src="${preview}" alt="">` : `<span></span>`}</td>
+        <td><input data-field="id" value="${escapeHtml(row.id)}"></td>
+        <td><input data-field="titleZh" value="${escapeHtml(row.titleZh)}"></td>
+        <td><input data-field="title" value="${escapeHtml(row.title)}"></td>
+        <td><textarea data-field="prompt" rows="3">${escapeHtml(row.prompt)}</textarea></td>
+        <td class="file-name">${escapeHtml(row.fileName)}</td>
+        <td>
+          <input class="row-file" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+          <button type="button" class="secondary row-upload" data-upload="${index}">上传行</button>
+        </td>
+        <td>
+          <select data-field="status">
+            <option value="active"${row.status !== "hidden" ? " selected" : ""}>上架</option>
+            <option value="hidden"${row.status === "hidden" ? " selected" : ""}>隐藏</option>
+          </select>
+        </td>
+      </tr>
+    `;
+  }).join("");
 
-function resetForm() {
-  fillForm({ category: "tennis", status: "active", sort: (icons.length + 1) * 10 });
-}
-
-function renderList() {
-  const sorted = [...icons].sort((a, b) => Number(a.sort || 0) - Number(b.sort || 0));
-  els.list.innerHTML = sorted.map((icon) => `
-    <article class="icon-card">
-      ${icon.thumb || icon.image ? `<img src="${icon.thumb || icon.image}" alt="">` : `<div class="icon-thumb"></div>`}
-      <strong>${icon.titleZh || icon.title || icon.id}</strong>
-      <small>${icon.id} · ${icon.status || "active"}</small>
-      <div class="card-actions">
-        <button type="button" data-edit="${icon.id}" class="secondary">编辑</button>
-        <button type="button" data-hide="${icon.id}" class="secondary">${icon.status === "hidden" ? "上架" : "隐藏"}</button>
-      </div>
-    </article>
-  `).join("");
-
-  els.list.querySelectorAll("[data-edit]").forEach((button) => {
-    button.addEventListener("click", () => fillForm(icons.find((icon) => icon.id === button.dataset.edit) || {}));
+  els.table.querySelectorAll("[data-field]").forEach((field) => {
+    field.addEventListener("input", () => {
+      const tr = field.closest("tr");
+      const row = tableRows[Number(tr.dataset.index)];
+      const key = field.dataset.field;
+      row[key] = key === "id" ? slug(field.value) : field.value;
+    });
   });
 
-  els.list.querySelectorAll("[data-hide]").forEach((button) => {
+  els.table.querySelectorAll(".row-file").forEach((input) => {
+    input.addEventListener("change", () => {
+      const tr = input.closest("tr");
+      const row = tableRows[Number(tr.dataset.index)];
+      row.file = input.files?.[0];
+      if (row.file) row.fileName = row.file.name;
+      renderTable();
+    });
+  });
+
+  els.table.querySelectorAll("[data-upload]").forEach((button) => {
     button.addEventListener("click", async () => {
-      const icon = icons.find((item) => item.id === button.dataset.hide);
-      if (!icon) return;
-      icon.status = icon.status === "hidden" ? "active" : "hidden";
-      await saveIcons().catch((error) => setStatus(error.message));
+      try {
+        const row = tableRows[Number(button.dataset.upload)];
+        setStatus(`正在上传 ${row.id}...`);
+        await uploadFile(row);
+        await saveIcons();
+        renderTable();
+      } catch (error) {
+        setStatus(error.message);
+      }
     });
   });
 }
@@ -165,39 +242,34 @@ els.load.addEventListener("click", () => {
   loadIcons().catch((error) => setStatus(error.message));
 });
 
-els.saveAll.addEventListener("click", () => {
-  saveIcons().catch((error) => setStatus(error.message));
+els.resetTable.addEventListener("click", () => {
+  buildTable().catch((error) => setStatus(error.message));
 });
 
-els.reset.addEventListener("click", resetForm);
+els.folder.addEventListener("change", async () => {
+  fileMap = new Map();
+  [...els.folder.files].forEach((file) => fileMap.set(file.name.toLowerCase(), file));
+  await buildTable();
+  const matched = tableRows.filter((row) => row.file).length;
+  setStatus(`已匹配 ${matched}/${tableRows.length} 个文件`);
+});
 
-els.saveIcon.addEventListener("click", async () => {
+els.uploadSelected.addEventListener("click", async () => {
   try {
-    const existing = icons.find((icon) => icon.id === slug(els.id.value)) || {};
-    const icon = formToIcon(existing);
-    if (!icon.id) throw new Error("请先填写 ID");
-
-    const file = els.file.files?.[0];
-    if (file) {
-      setStatus("正在上传图片...");
-      const assetUrl = await uploadFile(icon.id, file);
-      icon.image = assetUrl;
-      icon.thumb = assetUrl;
-    } else {
-      icon.image = icon.image || `/api/assets?key=icons/${icon.id}.png`;
-      icon.thumb = icon.thumb || icon.image;
+    const rowsWithFiles = tableRows.filter((row) => row.file);
+    if (!rowsWithFiles.length) throw new Error("请先选择 icon 文件夹，或在表格行内选择图片");
+    for (const row of rowsWithFiles) {
+      setStatus(`正在上传 ${row.order}/${tableRows.length}: ${row.id}`);
+      await uploadFile(row);
     }
-
-    const index = icons.findIndex((item) => item.id === icon.id);
-    if (index >= 0) icons[index] = icon;
-    else icons.push(icon);
-
     await saveIcons();
-    resetForm();
+    renderTable();
+    setStatus(`已上传 ${rowsWithFiles.length} 个图片，并保存 ${tableRows.length} 行表格数据`);
   } catch (error) {
     setStatus(error.message);
   }
 });
 
-resetForm();
-loadIcons().catch((error) => setStatus(error.message));
+buildTable()
+  .then(() => loadIcons())
+  .catch((error) => setStatus(error.message));

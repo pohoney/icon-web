@@ -1,0 +1,667 @@
+{
+  "source": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/tennis_gesture_icon_30.xlsx",
+  "sheet": "Tennis Gesture Icons",
+  "count": 30,
+  "rows": [
+    {
+      "order": 1,
+      "id": "tennis_icon_01_open-stance-forehand",
+      "actionId": "open-stance-forehand",
+      "title": "Open stance forehand",
+      "titleZh": "开放式站位正手",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: open-stance forehand swing, torso rotating, racket sweeping across the body, weight on the outside leg. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_01_open-stance-forehand.png",
+      "fileName": "tennis_icon_01_open-stance-forehand.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 10,
+      "status": "active"
+    },
+    {
+      "order": 2,
+      "id": "tennis_icon_02_two-handed-backhand",
+      "actionId": "two-handed-backhand",
+      "title": "Two-handed backhand",
+      "titleZh": "双手反拍",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: two-handed backhand drive, both hands on racket, compact coiled torso, front shoulder leading. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_02_two-handed-backhand.png",
+      "fileName": "tennis_icon_02_two-handed-backhand.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 20,
+      "status": "active"
+    },
+    {
+      "order": 3,
+      "id": "tennis_icon_03_serve-trophy-pose",
+      "actionId": "serve-trophy-pose",
+      "title": "Serve trophy pose",
+      "titleZh": "发球奖杯姿势",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: serve trophy pose, tossing arm lifted high, racket arm bent behind head, chest open upward. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_03_serve-trophy-pose.png",
+      "fileName": "tennis_icon_03_serve-trophy-pose.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 30,
+      "status": "active"
+    },
+    {
+      "order": 4,
+      "id": "tennis_icon_04_jump-serve-contact",
+      "actionId": "jump-serve-contact",
+      "title": "Jump serve contact",
+      "titleZh": "跳起发球击球点",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: jumping serve contact, body extended upward, racket striking high above the head, legs kicked apart. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_04_jump-serve-contact.png",
+      "fileName": "tennis_icon_04_jump-serve-contact.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 40,
+      "status": "active"
+    },
+    {
+      "order": 5,
+      "id": "tennis_icon_05_split-step-ready",
+      "actionId": "split-step-ready",
+      "title": "Split-step ready",
+      "titleZh": "分腿垫步准备",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: split-step ready position, knees bent, feet apart, racket centered in front, alert athletic balance. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_05_split-step-ready.png",
+      "fileName": "tennis_icon_05_split-step-ready.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 50,
+      "status": "active"
+    },
+    {
+      "order": 6,
+      "id": "tennis_icon_06_low-volley-lunge",
+      "actionId": "low-volley-lunge",
+      "title": "Low volley lunge",
+      "titleZh": "低位截击弓步",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: low forehand volley lunge, front knee deeply bent, racket reaching forward near the ground. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_06_low-volley-lunge.png",
+      "fileName": "tennis_icon_06_low-volley-lunge.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 60,
+      "status": "active"
+    },
+    {
+      "order": 7,
+      "id": "tennis_icon_07_overhead-smash",
+      "actionId": "overhead-smash",
+      "title": "Overhead smash",
+      "titleZh": "高压扣杀",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: overhead smash, non-racket arm counterbalancing, racket arm chopping downward from above. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_07_overhead-smash.png",
+      "fileName": "tennis_icon_07_overhead-smash.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 70,
+      "status": "active"
+    },
+    {
+      "order": 8,
+      "id": "tennis_icon_08_sliding-forehand-save",
+      "actionId": "sliding-forehand-save",
+      "title": "Sliding forehand save",
+      "titleZh": "滑步正手救球",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: sliding forehand save, body leaning far sideways, one leg extended in a slide, racket reaching wide. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_08_sliding-forehand-save.png",
+      "fileName": "tennis_icon_08_sliding-forehand-save.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 80,
+      "status": "active"
+    },
+    {
+      "order": 9,
+      "id": "tennis_icon_09_running-crosscourt-chase",
+      "actionId": "running-crosscourt-chase",
+      "title": "Running crosscourt chase",
+      "titleZh": "横穿球场追球",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: sprinting crosscourt chase, one arm pumping, racket carried behind, body pitched forward. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_09_running-crosscourt-chase.png",
+      "fileName": "tennis_icon_09_running-crosscourt-chase.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 90,
+      "status": "active"
+    },
+    {
+      "order": 10,
+      "id": "tennis_icon_10_drop-shot-reach",
+      "actionId": "drop-shot-reach",
+      "title": "Drop shot reach",
+      "titleZh": "放小球前伸",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: delicate drop-shot reach, body folded forward, racket face soft and extended just in front. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_10_drop-shot-reach.png",
+      "fileName": "tennis_icon_10_drop-shot-reach.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 100,
+      "status": "active"
+    },
+    {
+      "order": 11,
+      "id": "tennis_icon_11_one-handed-backhand-slice",
+      "actionId": "one-handed-backhand-slice",
+      "title": "One-handed backhand slice",
+      "titleZh": "单手反拍削球",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: one-handed backhand slice, sideways body, single arm cutting downward across the ball, racket face open and extended. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_11_one-handed-backhand-slice.png",
+      "fileName": "tennis_icon_11_one-handed-backhand-slice.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 110,
+      "status": "active"
+    },
+    {
+      "order": 12,
+      "id": "tennis_icon_12_forehand-inside-out-step",
+      "actionId": "forehand-inside-out-step",
+      "title": "Inside-out forehand step",
+      "titleZh": "侧身抢攻正手",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: inside-out forehand attack, player stepping around the backhand corner, torso opening wide, racket whipping outward. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_12_forehand-inside-out-step.png",
+      "fileName": "tennis_icon_12_forehand-inside-out-step.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 120,
+      "status": "active"
+    },
+    {
+      "order": 13,
+      "id": "tennis_icon_13_return-serve-block",
+      "actionId": "return-serve-block",
+      "title": "Serve return block",
+      "titleZh": "接发球挡回",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: compact serve return block, crouched stance, racket held firm in front of the body, short controlled punch. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_13_return-serve-block.png",
+      "fileName": "tennis_icon_13_return-serve-block.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 130,
+      "status": "active"
+    },
+    {
+      "order": 14,
+      "id": "tennis_icon_14_backhand-lob-lift",
+      "actionId": "backhand-lob-lift",
+      "title": "Backhand lob lift",
+      "titleZh": "反拍挑高球",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: backhand lob lift, racket scooping upward from low position, body leaning slightly back, follow-through rising high. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_14_backhand-lob-lift.png",
+      "fileName": "tennis_icon_14_backhand-lob-lift.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 140,
+      "status": "active"
+    },
+    {
+      "order": 15,
+      "id": "tennis_icon_15_forehand-drop-shot-touch",
+      "actionId": "forehand-drop-shot-touch",
+      "title": "Forehand drop shot touch",
+      "titleZh": "正手轻放小球",
+      "source": "existing",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: forehand drop shot touch, soft wrist, racket face gently cushioning the ball at the front-side of the body. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_15_forehand-drop-shot-touch.png",
+      "fileName": "tennis_icon_15_forehand-drop-shot-touch.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 150,
+      "status": "active"
+    },
+    {
+      "order": 16,
+      "id": "tennis_icon_16_net-rush-approach",
+      "actionId": "net-rush-approach",
+      "title": "Net rush approach",
+      "titleZh": "上网逼近",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: net rush approach, player charging forward after the shot, body leaning into the court, racket carried ready in front. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_16_net-rush-approach.png",
+      "fileName": "tennis_icon_16_net-rush-approach.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 160,
+      "status": "active"
+    },
+    {
+      "order": 17,
+      "id": "tennis_icon_17_backhand-volley-punch",
+      "actionId": "backhand-volley-punch",
+      "title": "Backhand volley punch",
+      "titleZh": "反手截击推挡",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: backhand volley punch, short firm punch at the net, arm extended outside the body, racket face squared forward. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_17_backhand-volley-punch.png",
+      "fileName": "tennis_icon_17_backhand-volley-punch.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 170,
+      "status": "active"
+    },
+    {
+      "order": 18,
+      "id": "tennis_icon_18_forehand-swing-volley",
+      "actionId": "forehand-swing-volley",
+      "title": "Forehand swing volley",
+      "titleZh": "正手凌空抽击",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: forehand swing volley, striking the ball before it bounces, open chest, racket sweeping aggressively through the air. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_18_forehand-swing-volley.png",
+      "fileName": "tennis_icon_18_forehand-swing-volley.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 180,
+      "status": "active"
+    },
+    {
+      "order": 19,
+      "id": "tennis_icon_19_half-volley-scoop",
+      "actionId": "half-volley-scoop",
+      "title": "Half-volley scoop",
+      "titleZh": "半截击捞球",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: half-volley scoop just after the bounce, very low knees, racket lifting upward near the front foot. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_19_half-volley-scoop.png",
+      "fileName": "tennis_icon_19_half-volley-scoop.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 190,
+      "status": "active"
+    },
+    {
+      "order": 20,
+      "id": "tennis_icon_20_tweener-between-legs",
+      "actionId": "tweener-between-legs",
+      "title": "Tweener between legs",
+      "titleZh": "胯下击球",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: tweener between-the-legs shot, player facing away, racket swinging down between spread legs. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_20_tweener-between-legs.png",
+      "fileName": "tennis_icon_20_tweener-between-legs.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 200,
+      "status": "active"
+    },
+    {
+      "order": 21,
+      "id": "tennis_icon_21_defensive-moonball-loop",
+      "actionId": "defensive-moonball-loop",
+      "title": "Defensive moonball loop",
+      "titleZh": "防守高弧圈",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: defensive moonball loop, exaggerated low-to-high swing, body lifting upward, racket finishing high above shoulder. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_21_defensive-moonball-loop.png",
+      "fileName": "tennis_icon_21_defensive-moonball-loop.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 210,
+      "status": "active"
+    },
+    {
+      "order": 22,
+      "id": "tennis_icon_22_deep-squat-recovery",
+      "actionId": "deep-squat-recovery",
+      "title": "Deep squat recovery",
+      "titleZh": "深蹲重心恢复",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: deep squat recovery after a defensive shot, both knees bent low, racket held across the front for balance. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_22_deep-squat-recovery.png",
+      "fileName": "tennis_icon_22_deep-squat-recovery.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 220,
+      "status": "active"
+    },
+    {
+      "order": 23,
+      "id": "tennis_icon_23_baseline-side-shuffle",
+      "actionId": "baseline-side-shuffle",
+      "title": "Baseline side shuffle",
+      "titleZh": "底线横向滑步",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: baseline side shuffle, lateral footwork across the baseline, knees bent, racket held ready in front. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_23_baseline-side-shuffle.png",
+      "fileName": "tennis_icon_23_baseline-side-shuffle.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 230,
+      "status": "active"
+    },
+    {
+      "order": 24,
+      "id": "tennis_icon_24_crossover-recovery-step",
+      "actionId": "crossover-recovery-step",
+      "title": "Crossover recovery step",
+      "titleZh": "交叉步回位",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: crossover recovery step back to center, one leg crossing over the other, racket trailing at the side. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_24_crossover-recovery-step.png",
+      "fileName": "tennis_icon_24_crossover-recovery-step.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 240,
+      "status": "active"
+    },
+    {
+      "order": 25,
+      "id": "tennis_icon_25_ball-toss-preparation",
+      "actionId": "ball-toss-preparation",
+      "title": "Ball toss preparation",
+      "titleZh": "发球抛球准备",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: serve ball toss preparation, ball hand rising from waist, racket hand lowered behind, calm pre-serve posture. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_25_ball-toss-preparation.png",
+      "fileName": "tennis_icon_25_ball-toss-preparation.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 250,
+      "status": "active"
+    },
+    {
+      "order": 26,
+      "id": "tennis_icon_26_racket-twirl-wait",
+      "actionId": "racket-twirl-wait",
+      "title": "Racket twirl wait",
+      "titleZh": "转拍等待",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: racket twirl while waiting, relaxed upright stance, racket spinning lightly beside one hand. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_26_racket-twirl-wait.png",
+      "fileName": "tennis_icon_26_racket-twirl-wait.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 260,
+      "status": "active"
+    },
+    {
+      "order": 27,
+      "id": "tennis_icon_27_racket-raise-victory",
+      "actionId": "racket-raise-victory",
+      "title": "Racket raise victory",
+      "titleZh": "举拍庆祝胜利",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: victory celebration with racket raised high overhead, other arm open or clenched, body stretched upward. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_27_racket-raise-victory.png",
+      "fileName": "tennis_icon_27_racket-raise-victory.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 270,
+      "status": "active"
+    },
+    {
+      "order": 28,
+      "id": "tennis_icon_28_fist-pump-crouch",
+      "actionId": "fist-pump-crouch",
+      "title": "Fist pump crouch",
+      "titleZh": "弯身握拳庆祝",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: crouched fist pump celebration, torso leaning forward, one fist clenched near the body, racket lowered in the other hand. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_28_fist-pump-crouch.png",
+      "fileName": "tennis_icon_28_fist-pump-crouch.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 280,
+      "status": "active"
+    },
+    {
+      "order": 29,
+      "id": "tennis_icon_29_kneeling-victory-roar",
+      "actionId": "kneeling-victory-roar",
+      "title": "Kneeling victory roar",
+      "titleZh": "单膝跪地庆祝",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: kneeling victory roar, one knee on the ground, chest opened upward, racket extended diagonally to the side. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_29_kneeling-victory-roar.png",
+      "fileName": "tennis_icon_29_kneeling-victory-roar.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 290,
+      "status": "active"
+    },
+    {
+      "order": 30,
+      "id": "tennis_icon_30_racket-on-shoulder-walk",
+      "actionId": "racket-on-shoulder-walk",
+      "title": "Racket on shoulder walk",
+      "titleZh": "扛拍走向底线",
+      "source": "imagegen",
+      "prompt": "Render an abstract calligraphic sports action glyph, not a normal athlete illustration. Use one pure black broken ink silhouette on a flat white background, built from dense black ink masses, torn wedges, sharp triangular cutout gaps, long pointed distorted limbs, and rough dry-brush edges. The figure may be anatomically exaggerated and symbol-like; it must read first as a bold black motion mark, then as a tennis action. Simplify the racket into a thick flat black oval or fractured black oval with no strings. Use strong diagonal tension, generous empty white space, no panel borders, no text, no face, no clothing detail, no court, no scenery, no gradients, no shadows. Subject: tennis player. Action: walking with racket resting across the shoulder, relaxed tilted body, free arm hanging naturally. Color lock: foreground #000000, transparent background. Composition: centered icon, stable margin, instantly readable silhouette, no text. Extra constraints: single isolated icon only, no grid, no multiple poses, no caption, centered full-body tennis gesture with generous margin.",
+      "iconPath": "/Users/pohoney/Desktop/AIbro/Image AI/tennis_gesture_icon_30/icons/tennis_icon_30_racket-on-shoulder-walk.png",
+      "fileName": "tennis_icon_30_racket-on-shoulder-walk.png",
+      "category": "tennis",
+      "tags": [
+        "tennis",
+        "gesture"
+      ],
+      "tagsZh": [
+        "网球",
+        "动作"
+      ],
+      "sort": 300,
+      "status": "active"
+    }
+  ]
+}
