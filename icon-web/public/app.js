@@ -289,6 +289,9 @@ const fallbackIconData = [
   }
 ];
 
+const EFFECT_SETTINGS_VERSION = 2;
+const DEFAULT_EFFECT_SETTINGS = { gap: 20, size: 100, perspective: 100, stretch: 150 };
+
 const i18n = {
   zh: {
     all: "全部",
@@ -366,21 +369,24 @@ const els = {
   dialog: document.querySelector("#detailDialog"),
   close: document.querySelector("#closeDetail"),
   detailPreview: document.querySelector("#detailPreview"),
-  detailTags: document.querySelector("#detailTags"),
   detailTitle: document.querySelector("#detailTitle"),
   detailDescription: document.querySelector("#detailDescription"),
   copy: document.querySelector("#copyImage"),
   download: document.querySelector("#downloadImage"),
   toast: document.querySelector("#toast"),
   home: document.querySelector("#homeButton"),
+  effectPanel: document.querySelector(".effect-panel"),
   effectSliders: [...document.querySelectorAll(".effect-slider")],
+  effectValues: [...document.querySelectorAll("[data-effect-value]")],
+  toggleEffect: document.querySelector("#toggleEffect"),
   resetEffect: document.querySelector("#resetEffect")
 };
 
 function loadEffectSettings() {
-  const defaults = { gap: 50, size: 100, perspective: 100, stretch: 100 };
+  const defaults = DEFAULT_EFFECT_SETTINGS;
   try {
     const raw = JSON.parse(localStorage.getItem("ICON_EFFECT_SETTINGS") || "{}");
+    if (raw.__version !== EFFECT_SETTINGS_VERSION) return { ...defaults };
     const saved = {
       ...defaults,
       ...raw,
@@ -407,7 +413,15 @@ function clampNumber(value, min, max, fallback) {
 }
 
 function saveEffectSettings() {
-  localStorage.setItem("ICON_EFFECT_SETTINGS", JSON.stringify(state.effect));
+  localStorage.setItem("ICON_EFFECT_SETTINGS", JSON.stringify({ __version: EFFECT_SETTINGS_VERSION, ...state.effect }));
+}
+
+function updateEffectValueLabels() {
+  els.effectValues.forEach((value) => {
+    const key = value.dataset.effectValue;
+    if (!key) return;
+    value.textContent = String(state.effect[key] ?? "");
+  });
 }
 
 function setupEffectControls() {
@@ -417,19 +431,28 @@ function setupEffectControls() {
     slider.value = state.effect[key] ?? slider.value;
     slider.addEventListener("input", () => {
       state.effect[key] = Number(slider.value);
+      updateEffectValueLabels();
       saveEffectSettings();
       renderNet();
     });
   });
+  updateEffectValueLabels();
 
   els.resetEffect?.addEventListener("click", () => {
-    state.effect = { gap: 50, size: 100, perspective: 100, stretch: 100 };
+    state.effect = { ...DEFAULT_EFFECT_SETTINGS };
     saveEffectSettings();
     els.effectSliders.forEach((slider) => {
       const key = slider.dataset.effect;
       if (key) slider.value = state.effect[key];
     });
+    updateEffectValueLabels();
     renderNet();
+  });
+
+  els.toggleEffect?.addEventListener("click", () => {
+    const collapsed = els.effectPanel.classList.toggle("collapsed");
+    els.toggleEffect.setAttribute("aria-label", collapsed ? "展开" : "收起");
+    els.toggleEffect.setAttribute("aria-expanded", String(!collapsed));
   });
 }
 
@@ -605,10 +628,11 @@ function renderNet() {
   icons.forEach(preloadIcon);
 
   const cells = buildSphereCells(icons);
+  const displayCount = cells.length;
+  els.resultCount.textContent = `${displayCount.toLocaleString()} ${state.query || state.category !== "all" ? i18n[state.lang].results : i18n[state.lang].icons}`;
 
   els.iconNet.innerHTML = cells.map(({ icon, gx, gy }, index) => {
     const title = label(icon, "title");
-    const tags = getTags(icon).slice(0, 2).join(" / ");
 
     return `
       <button
@@ -621,10 +645,6 @@ function renderNet() {
         aria-label="${title}"
       >
         <span class="tile-art">${imageSlot(icon)}</span>
-        <span class="tile-label">
-          <strong>${title}</strong>
-          <small>${tags}</small>
-        </span>
       </button>
     `;
   }).join("");
@@ -641,16 +661,16 @@ function renderNet() {
 function buildSphereCells(icons) {
   if (!icons.length) return [];
   const cells = [];
-  const cols = 13;
-  const rows = 9;
-  let index = 0;
-  for (let gy = -Math.floor(rows / 2); gy <= Math.floor(rows / 2); gy += 1) {
-    for (let gx = -Math.floor(cols / 2); gx <= Math.floor(cols / 2); gx += 1) {
-      const radius = Math.hypot(gx / (cols / 2), gy / (rows / 2));
-      if (radius <= 1.18) {
-        cells.push({ icon: icons[index % icons.length], gx, gy });
-        index += 1;
-      }
+  const cols = 6;
+  const rows = 5;
+  for (let y = 0; y < rows; y += 1) {
+    for (let x = 0; x < cols; x += 1) {
+      const index = y * cols + x;
+      cells.push({
+        icon: icons[index % icons.length],
+        gx: x - (cols - 1) / 2,
+        gy: y - (rows - 1) / 2
+      });
     }
   }
   return cells;
@@ -665,11 +685,11 @@ function updateSphereLayout() {
   const perspectiveEffect = clampNumber(state.effect.perspective, 0, 180, 100) / 100;
   const stretchEffect = clampNumber(state.effect.stretch, 60, 150, 100) / 100;
   const minSide = Math.min(rect.width, rect.height);
-  const tileSize = Math.min(184, Math.max(82, minSide * 0.14 * sizeEffect));
-  const safetyGap = 0.08 + perspectiveEffect * 0.04;
+  const tileSize = Math.min(260, Math.max(116, minSide * 0.22 * sizeEffect));
+  const safetyGap = 0.04 + perspectiveEffect * 0.04;
   const cellSize = tileSize * (1 + gapRatio + safetyGap);
-  const radiusX = Math.max(tileSize * 2.4, rect.width * 0.49);
-  const radiusY = Math.max(tileSize * 2.4, rect.height * 0.49 * stretchEffect);
+  const radiusX = Math.max(tileSize * 2.8, rect.width * 0.48);
+  const radiusY = Math.max(tileSize * 2.05, rect.height * 0.38 * stretchEffect);
   const lens = 0.78 + perspectiveEffect * 0.48;
   const cx = rect.width / 2;
   const cy = rect.height / 2;
@@ -801,9 +821,8 @@ function openDetail(id) {
 
   const title = label(icon, "title");
   els.detailPreview.innerHTML = imageSlot(icon, "detail");
-  els.detailTags.innerHTML = getTags(icon).map((tag) => `<span>${tag}</span>`).join("");
   els.detailTitle.textContent = title;
-  els.detailDescription.textContent = label(icon, "description");
+  els.detailDescription.textContent = label(icon, "description") || `Generate a clean tennis icon for ${title}, centered in a simple yellow circular style.`;
   els.copy.textContent = i18n[state.lang].copy;
   els.download.textContent = i18n[state.lang].download;
 

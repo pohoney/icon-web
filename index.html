@@ -50,24 +50,29 @@
     <aside class="effect-panel" aria-label="Icon preview effect controls">
       <div class="effect-panel-head">
         <strong>效果调节</strong>
-        <button id="resetEffect" type="button">重置</button>
+        <div class="effect-panel-actions">
+          <button id="toggleEffect" class="icon-action" type="button" aria-label="收起" aria-expanded="true">⌄</button>
+          <button id="resetEffect" class="icon-action" type="button" aria-label="重置">↺</button>
+        </div>
       </div>
-      <label>
-        <span>间距</span>
-        <input class="effect-slider" data-effect="gap" type="range" min="0" max="120" value="50" />
-      </label>
-      <label>
-        <span>大小</span>
-        <input class="effect-slider" data-effect="size" type="range" min="70" max="150" value="100" />
-      </label>
-      <label>
-        <span>透视</span>
-        <input class="effect-slider" data-effect="perspective" type="range" min="0" max="180" value="100" />
-      </label>
-      <label>
-        <span>形变</span>
-        <input class="effect-slider" data-effect="stretch" type="range" min="60" max="150" value="100" />
-      </label>
+      <div class="effect-panel-body">
+        <label>
+          <span class="effect-label">间距 <small data-effect-value="gap">20</small></span>
+          <input class="effect-slider" data-effect="gap" type="range" min="0" max="120" value="20" />
+        </label>
+        <label>
+          <span class="effect-label">大小 <small data-effect-value="size">100</small></span>
+          <input class="effect-slider" data-effect="size" type="range" min="70" max="150" value="100" />
+        </label>
+        <label>
+          <span class="effect-label">透视 <small data-effect-value="perspective">100</small></span>
+          <input class="effect-slider" data-effect="perspective" type="range" min="0" max="180" value="100" />
+        </label>
+        <label>
+          <span class="effect-label">形变 <small data-effect-value="stretch">150</small></span>
+          <input class="effect-slider" data-effect="stretch" type="range" min="60" max="150" value="150" />
+        </label>
+      </div>
     </aside>
 
     <dialog id="detailDialog" class="detail-dialog">
@@ -75,8 +80,8 @@
         <button id="closeDetail" class="close-button" type="button" aria-label="Close">×</button>
         <div class="detail-preview" id="detailPreview"></div>
         <div class="detail-copy">
-          <div class="detail-meta" id="detailTags"></div>
           <h1 id="detailTitle"></h1>
+          <strong class="prompt-label">动作 Prompt</strong>
           <p id="detailDescription"></p>
           <div class="detail-actions">
             <button id="copyImage" class="detail-button secondary" type="button"></button>
