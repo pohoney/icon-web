@@ -503,6 +503,12 @@ function getSupabaseConfig() {
   return { supabaseUrl, anonKey, enabled: Boolean(supabaseUrl && anonKey) };
 }
 
+function getApiUrl(path) {
+  const config = window.TENNIS_ICON_CONFIG || {};
+  const apiBaseUrl = String(config.apiBaseUrl || "").replace(/\/+$/, "");
+  return `${apiBaseUrl}${path}`;
+}
+
 function mapDbIcon(row) {
   return {
     id: row.id,
@@ -520,7 +526,7 @@ function mapDbIcon(row) {
 
 async function loadIconsFromDatabase() {
   try {
-    const response = await fetch("/api/icons", { headers: { accept: "application/json" } });
+    const response = await fetch(getApiUrl("/api/icons"), { headers: { accept: "application/json" } });
     if (response.ok) {
       const payload = await response.json();
       if (Array.isArray(payload.icons)) {
