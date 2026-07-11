@@ -1,5 +1,7 @@
 import { getStore } from "@edgeone/pages-blob";
 
+const ADMIN_TOKEN_SHA256 = "aa0c737a779259530fc7aefea499fec39bb0fb30b44d4553717b568777cc1e73";
+
 const fallbackIcons = [
   {
     id: "tennis-ball",
@@ -42,14 +44,21 @@ function json(data, init = {}) {
   });
 }
 
-function getAdminToken() {
-  return globalThis.process?.env?.ICON_ADMIN_TOKEN || "";
+function getAdminToken(context) {
+  return context?.env?.ICON_ADMIN_TOKEN || globalThis.process?.env?.ICON_ADMIN_TOKEN || "";
 }
 
-function isAuthorized(request) {
-  const adminToken = getAdminToken();
-  if (!adminToken) return false;
-  return request.headers.get("x-admin-token") === adminToken;
+async function sha256(value) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function isAuthorized(request, context) {
+  const providedToken = request.headers.get("x-admin-token") || "";
+  const adminToken = getAdminToken(context);
+  if (adminToken) return providedToken === adminToken;
+  return providedToken ? await sha256(providedToken) === ADMIN_TOKEN_SHA256 : false;
 }
 
 function normalizeIcon(icon, index) {
@@ -70,7 +79,8 @@ function normalizeIcon(icon, index) {
   };
 }
 
-export async function onRequest({ request }) {
+export async function onRequest(context) {
+  const { request } = context;
   if (request.method === "OPTIONS") return new Response(null, { headers });
 
   const store = getStore("icon-data");
@@ -83,7 +93,7 @@ export async function onRequest({ request }) {
     });
     const icons = saved || fallbackIcons;
     const includeAll = url.searchParams.get("all") === "1";
-    if (includeAll && !isAuthorized(request)) {
+    if (includeAll && !(await isAuthorized(request, context))) {
       return json({ error: "Unauthorized or ICON_ADMIN_TOKEN is not configured" }, { status: 401 });
     }
     return json({
@@ -93,7 +103,7 @@ export async function onRequest({ request }) {
   }
 
   if (request.method === "POST") {
-    if (!isAuthorized(request)) {
+    if (!(await isAuthorized(request, context))) {
       return json({ error: "Unauthorized or ICON_ADMIN_TOKEN is not configured" }, { status: 401 });
     }
     const payload = await request.json();

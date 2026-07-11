@@ -1,5 +1,7 @@
 import { getStore } from "@edgeone/pages-blob";
 
+const ADMIN_TOKEN_SHA256 = "aa0c737a779259530fc7aefea499fec39bb0fb30b44d4553717b568777cc1e73";
+
 const headers = {
   "content-type": "application/json; charset=utf-8",
   "cache-control": "no-store",
@@ -15,14 +17,21 @@ function json(data, init = {}) {
   });
 }
 
-function getAdminToken() {
-  return globalThis.process?.env?.ICON_ADMIN_TOKEN || "";
+function getAdminToken(context) {
+  return context?.env?.ICON_ADMIN_TOKEN || globalThis.process?.env?.ICON_ADMIN_TOKEN || "";
 }
 
-function isAuthorized(request) {
-  const adminToken = getAdminToken();
-  if (!adminToken) return false;
-  return request.headers.get("x-admin-token") === adminToken;
+async function sha256(value) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function isAuthorized(request, context) {
+  const providedToken = request.headers.get("x-admin-token") || "";
+  const adminToken = getAdminToken(context);
+  if (adminToken) return providedToken === adminToken;
+  return providedToken ? await sha256(providedToken) === ADMIN_TOKEN_SHA256 : false;
 }
 
 function slug(value) {
@@ -41,10 +50,11 @@ function extensionFromType(contentType) {
   return "png";
 }
 
-export async function onRequest({ request }) {
+export async function onRequest(context) {
+  const { request } = context;
   if (request.method === "OPTIONS") return new Response(null, { headers });
   if (request.method !== "POST") return json({ error: "Method not allowed" }, { status: 405 });
-  if (!isAuthorized(request)) {
+  if (!(await isAuthorized(request, context))) {
     return json({ error: "Unauthorized or ICON_ADMIN_TOKEN is not configured" }, { status: 401 });
   }
 
