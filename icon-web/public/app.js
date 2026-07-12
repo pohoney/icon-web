@@ -509,6 +509,20 @@ function getApiUrl(path) {
   return `${apiBaseUrl}${path}`;
 }
 
+function resolveBackendAssetUrl(value) {
+  const url = String(value || "");
+  if (!url || /^(https?:|data:|blob:)/i.test(url)) return url;
+  return getApiUrl(url.startsWith("/") ? url : `/${url}`);
+}
+
+function mapApiIcon(icon) {
+  return {
+    ...icon,
+    image: resolveBackendAssetUrl(icon.image || icon.thumb),
+    thumb: resolveBackendAssetUrl(icon.thumb || icon.image)
+  };
+}
+
 function mapDbIcon(row) {
   return {
     id: row.id,
@@ -530,7 +544,7 @@ async function loadIconsFromDatabase() {
     if (response.ok) {
       const payload = await response.json();
       if (Array.isArray(payload.icons)) {
-        iconData = payload.icons.length ? payload.icons : [...fallbackIconData];
+        iconData = payload.icons.length ? payload.icons.map(mapApiIcon) : [...fallbackIconData];
         state.source = payload.source || "edgeone";
         state.loading = false;
         return;
