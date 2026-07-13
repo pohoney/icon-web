@@ -345,6 +345,7 @@ const state = {
     vy: 0,
     dragging: false,
     moved: 0,
+    downIconId: null,
     suppressClick: false,
     lastX: 0,
     lastY: 0,
@@ -792,6 +793,7 @@ function setupSphereInteraction() {
   els.netStage.addEventListener("pointerdown", (event) => {
     state.sphere.dragging = true;
     state.sphere.moved = 0;
+    state.sphere.downIconId = event.target.closest(".icon-tile")?.dataset.id || null;
     state.sphere.lastX = event.clientX;
     state.sphere.lastY = event.clientY;
     state.sphere.lastTime = performance.now();
@@ -821,7 +823,16 @@ function setupSphereInteraction() {
   const endDrag = (event) => {
     if (!state.sphere.dragging) return;
     state.sphere.dragging = false;
-    if (state.sphere.moved > 8) {
+    const clickedIconId = state.sphere.downIconId;
+    state.sphere.downIconId = null;
+
+    if (event.type === "pointerup" && state.sphere.moved <= 8 && clickedIconId) {
+      state.sphere.suppressClick = true;
+      openDetail(clickedIconId);
+      window.setTimeout(() => {
+        state.sphere.suppressClick = false;
+      }, 0);
+    } else if (state.sphere.moved > 8) {
       state.sphere.suppressClick = true;
       window.setTimeout(() => {
         state.sphere.suppressClick = false;
