@@ -426,6 +426,15 @@ function updateEffectValueLabels() {
 }
 
 function setupEffectControls() {
+  const syncToggleState = () => {
+    if (!els.toggleEffect || !els.effectPanel) return;
+    const collapsed = els.effectPanel.classList.contains("collapsed");
+    els.toggleEffect.textContent = collapsed ? "‹" : "›";
+    els.toggleEffect.setAttribute("aria-label", collapsed ? "向左展开" : "向右收起");
+    els.toggleEffect.setAttribute("title", collapsed ? "向左展开" : "向右收起");
+    els.toggleEffect.setAttribute("aria-expanded", String(!collapsed));
+  };
+
   els.effectSliders.forEach((slider) => {
     const key = slider.dataset.effect;
     if (!key) return;
@@ -451,10 +460,11 @@ function setupEffectControls() {
   });
 
   els.toggleEffect?.addEventListener("click", () => {
-    const collapsed = els.effectPanel.classList.toggle("collapsed");
-    els.toggleEffect.setAttribute("aria-label", collapsed ? "展开" : "收起");
-    els.toggleEffect.setAttribute("aria-expanded", String(!collapsed));
+    els.effectPanel.classList.toggle("collapsed");
+    syncToggleState();
   });
+
+  syncToggleState();
 }
 
 function label(icon, key) {
