@@ -860,6 +860,14 @@ function render() {
   renderNet();
 }
 
+function toTitleCase(value) {
+  return String(value || "").replace(/\S+/g, (word) => {
+    const first = word.match(/[A-Za-z]/)?.index;
+    if (first === undefined) return word;
+    return `${word.slice(0, first)}${word.charAt(first).toUpperCase()}${word.slice(first + 1).toLowerCase()}`;
+  });
+}
+
 function openDetail(id) {
   const icon = iconData.find((item) => item.id === id);
   if (!icon) return;
@@ -868,7 +876,7 @@ function openDetail(id) {
   const title = icon.title || icon.titleZh || icon.id;
   const prompt = icon.description || icon.descriptionZh || `Generate a clean tennis icon for ${title}, centered in a simple yellow circular style.`;
   els.detailPreview.innerHTML = imageSlot(icon, "detail");
-  els.detailTitle.textContent = title;
+  els.detailTitle.textContent = toTitleCase(title);
   els.detailDescription.textContent = prompt;
   els.copy.textContent = i18n[state.lang].copy;
   els.download.textContent = i18n[state.lang].download;
