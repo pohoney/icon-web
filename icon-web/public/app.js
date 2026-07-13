@@ -289,8 +289,9 @@ const fallbackIconData = [
   }
 ];
 
-const EFFECT_SETTINGS_VERSION = 2;
-const DEFAULT_EFFECT_SETTINGS = { gap: 20, size: 100, perspective: 100, stretch: 150 };
+const EFFECT_SETTINGS_VERSION = 3;
+const EFFECT_SIZE_MAX = 375;
+const DEFAULT_EFFECT_SETTINGS = { gap: 74, size: 150, perspective: 0, stretch: 150 };
 
 const i18n = {
   zh: {
@@ -397,7 +398,7 @@ function loadEffectSettings() {
     };
     return {
       gap: clampNumber(saved.gap, 0, 120, defaults.gap),
-      size: clampNumber(saved.size, 70, 150, defaults.size),
+      size: clampNumber(saved.size, 70, EFFECT_SIZE_MAX, defaults.size),
       perspective: clampNumber(saved.perspective, 0, 180, defaults.perspective),
       stretch: clampNumber(saved.stretch, 60, 150, defaults.stretch)
     };
@@ -705,11 +706,11 @@ function updateSphereLayout() {
   if (!rect.width || !rect.height) return;
 
   const gapRatio = clampNumber(state.effect.gap, 0, 120, 50) / 100;
-  const sizeEffect = clampNumber(state.effect.size, 70, 150, 100) / 100;
+  const sizeEffect = clampNumber(state.effect.size, 70, EFFECT_SIZE_MAX, 100) / 100;
   const perspectiveEffect = clampNumber(state.effect.perspective, 0, 180, 100) / 100;
   const stretchEffect = clampNumber(state.effect.stretch, 60, 150, 100) / 100;
   const minSide = Math.min(rect.width, rect.height);
-  const tileSize = Math.min(260, Math.max(116, minSide * 0.22 * sizeEffect));
+  const tileSize = Math.min(650, Math.max(116, minSide * 0.22 * sizeEffect));
   const safetyGap = 0.04 + perspectiveEffect * 0.04;
   const cellSize = tileSize * (1 + gapRatio + safetyGap);
   const radiusX = Math.max(tileSize * 2.8, rect.width * 0.48);
