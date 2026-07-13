@@ -509,8 +509,9 @@ button {
 }
 
 .detail-dialog {
-  width: min(900px, calc(100vw - 32px));
+  width: min(940px, calc(100vw - 32px));
   max-height: calc(100dvh - 32px);
+  margin: auto;
   border: 0;
   padding: 0;
   background: transparent;
@@ -526,8 +527,9 @@ button {
   position: relative;
   display: grid;
   grid-template-columns: minmax(240px, 0.78fr) minmax(300px, 1fr);
-  gap: 24px;
+  gap: 30px;
   align-items: stretch;
+  min-height: min(620px, calc(100dvh - 40px));
   max-height: calc(100dvh - 32px);
   overflow: auto;
   border: 1px solid rgba(255, 255, 255, 0.72);
@@ -536,7 +538,7 @@ button {
   box-shadow: var(--shadow);
   backdrop-filter: blur(30px) saturate(150%);
   -webkit-backdrop-filter: blur(30px) saturate(150%);
-  padding: clamp(22px, 4vw, 42px);
+  padding: clamp(28px, 4.5vw, 52px);
   animation: modalIn 210ms ease both;
 }
 
@@ -556,8 +558,8 @@ button {
 .detail-copy {
   display: grid;
   grid-template-rows: auto auto 1fr auto;
-  gap: 12px;
-  min-height: 360px;
+  gap: 16px;
+  min-height: 420px;
   padding-right: 50px;
 }
 
@@ -599,8 +601,8 @@ button {
   display: flex;
   justify-content: flex-end;
   flex-wrap: nowrap;
-  gap: 10px;
-  padding-top: 4px;
+  gap: 14px;
+  padding-top: 10px;
 }
 
 .detail-button {

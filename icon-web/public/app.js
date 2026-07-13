@@ -919,16 +919,51 @@ function drawPlaceholder(icon, size = 1024) {
   return canvas;
 }
 
+function canvasToPngBlob(canvas) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) resolve(blob);
+      else reject(new Error("Failed to render PNG blob."));
+    }, "image/png", 1);
+  });
+}
+
+async function blobToPngBlob(blob) {
+  if (blob.type === "image/png") return blob;
+
+  const sourceUrl = URL.createObjectURL(blob);
+  try {
+    const image = new Image();
+    image.decoding = "async";
+    image.src = sourceUrl;
+    await image.decode();
+
+    const canvas = document.createElement("canvas");
+    canvas.width = image.naturalWidth || image.width;
+    canvas.height = image.naturalHeight || image.height;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(image, 0, 0);
+    return await canvasToPngBlob(canvas);
+  } finally {
+    URL.revokeObjectURL(sourceUrl);
+  }
+}
+
 async function getImageBlob(icon) {
-  if (state.imageStatus.get(icon.id) === "loaded") {
+  const src = icon.image || icon.thumb;
+  if (src) {
     try {
-      const response = await fetch(icon.image || icon.thumb);
-      if (response.ok) return await response.blob();
+      const response = await fetch(src, { cache: "no-store" });
+      if (response.ok) {
+        const blob = await response.blob();
+        return await blobToPngBlob(blob).catch(() => blob);
+      }
     } catch {
       // Placeholder fallback below keeps copy/download usable without assets.
     }
   }
-  return new Promise((resolve) => drawPlaceholder(icon).toBlob(resolve, "image/png", 0.95));
+  return canvasToPngBlob(drawPlaceholder(icon));
 }
 
 async function copySelected() {
