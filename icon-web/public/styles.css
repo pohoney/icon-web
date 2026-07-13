@@ -517,9 +517,9 @@ button {
 }
 
 .detail-dialog::backdrop {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(40px) saturate(140%);
-  -webkit-backdrop-filter: blur(40px) saturate(140%);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px) saturate(112%);
+  -webkit-backdrop-filter: blur(10px) saturate(112%);
 }
 
 .detail-card {
@@ -570,16 +570,17 @@ button {
 
 .prompt-label {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 850;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: lowercase;
 }
 
 .detail-copy p {
   max-width: 58ch;
   max-height: 220px;
   overflow: auto;
+  scrollbar-width: none;
   margin: 0;
   border: 1px solid rgba(23, 25, 20, 0.1);
   border-radius: 12px;
@@ -588,6 +589,10 @@ button {
   padding: 14px;
   font-size: 13px;
   line-height: 1.6;
+}
+
+.detail-copy p::-webkit-scrollbar {
+  display: none;
 }
 
 .detail-actions {
@@ -643,8 +648,17 @@ button {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.72);
   color: var(--ink);
-  font-size: 25px;
+  font-size: 0;
+  line-height: 0;
+}
+
+.close-button::before {
+  content: "×";
+  display: block;
+  font-size: 30px;
+  font-weight: 500;
   line-height: 1;
+  transform: translateY(-1px);
 }
 
 .toast {

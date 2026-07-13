@@ -865,10 +865,11 @@ function openDetail(id) {
   if (!icon) return;
   state.selected = icon;
 
-  const title = label(icon, "title");
+  const title = icon.title || icon.titleZh || icon.id;
+  const prompt = icon.description || icon.descriptionZh || `Generate a clean tennis icon for ${title}, centered in a simple yellow circular style.`;
   els.detailPreview.innerHTML = imageSlot(icon, "detail");
   els.detailTitle.textContent = title;
-  els.detailDescription.textContent = label(icon, "description") || `Generate a clean tennis icon for ${title}, centered in a simple yellow circular style.`;
+  els.detailDescription.textContent = prompt;
   els.copy.textContent = i18n[state.lang].copy;
   els.download.textContent = i18n[state.lang].download;
 
