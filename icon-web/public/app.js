@@ -307,9 +307,10 @@ const i18n = {
     copy: "复制图片",
     copying: "正在复制",
     copied: "已复制图片",
-    copyFail: "复制失败，已为你准备下载",
+    copyFail: "复制失败，请重试或下载 PNG",
     download: "下载 PNG",
-    downloaded: "已下载图标"
+    downloaded: "已下载图标",
+    downloadFail: "真实图标读取失败"
   },
   en: {
     all: "All",
@@ -324,9 +325,10 @@ const i18n = {
     copy: "Copy image",
     copying: "Copying",
     copied: "Image copied",
-    copyFail: "Copy failed, download is ready",
+    copyFail: "Copy failed. Try again or download the PNG.",
     download: "Download PNG",
-    downloaded: "Icon downloaded"
+    downloaded: "Icon downloaded",
+    downloadFail: "Could not load the icon image"
   }
 };
 
@@ -958,18 +960,24 @@ async function blobToPngBlob(blob) {
   }
 }
 
-async function getImageBlob(icon) {
-  const src = icon.image || icon.thumb;
-  if (src) {
-    try {
-      const response = await fetch(src, { cache: "no-store" });
-      if (response.ok) {
-        const blob = await response.blob();
-        return await blobToPngBlob(blob).catch(() => blob);
-      }
-    } catch {
-      // Placeholder fallback below keeps copy/download usable without assets.
-    }
+function getIconSource(icon) {
+  return resolveBackendAssetUrl(icon?.image || icon?.thumb || "");
+}
+
+async function fetchIconBlob(icon) {
+  const src = getIconSource(icon);
+  if (!src) throw new Error("Icon image source is missing.");
+  const response = await fetch(src, { cache: "no-store", mode: "cors" });
+  if (!response.ok) throw new Error(`Icon image request failed: ${response.status}`);
+  const blob = await response.blob();
+  return blobToPngBlob(blob).catch(() => blob);
+}
+
+async function getImageBlob(icon, options = {}) {
+  try {
+    return await fetchIconBlob(icon);
+  } catch (error) {
+    if (options.requireReal) throw error;
   }
   return canvasToPngBlob(drawPlaceholder(icon));
 }
@@ -977,13 +985,12 @@ async function getImageBlob(icon) {
 async function copySelected() {
   if (!state.selected) return;
   els.copy.textContent = i18n[state.lang].copying;
-  const blob = await getImageBlob(state.selected);
   try {
-    await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
+    const blob = await getImageBlob(state.selected, { requireReal: true });
+    await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
     showToast(i18n[state.lang].copied);
   } catch {
     showToast(i18n[state.lang].copyFail);
-    downloadSelected();
   } finally {
     els.copy.textContent = i18n[state.lang].copy;
   }
@@ -991,14 +998,24 @@ async function copySelected() {
 
 async function downloadSelected() {
   if (!state.selected) return;
-  const blob = await getImageBlob(state.selected);
-  const url = URL.createObjectURL(blob);
-  const anchor = document.createElement("a");
-  anchor.href = url;
-  anchor.download = `${state.selected.id}.png`;
-  anchor.click();
-  URL.revokeObjectURL(url);
-  showToast(i18n[state.lang].downloaded);
+  let url = "";
+  try {
+    const blob = await getImageBlob(state.selected, { requireReal: true });
+    url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `${state.selected.id}.png`;
+    anchor.rel = "noopener";
+    anchor.style.display = "none";
+    document.body.append(anchor);
+    anchor.click();
+    anchor.remove();
+    showToast(i18n[state.lang].downloaded);
+  } catch {
+    showToast(i18n[state.lang].downloadFail);
+  } finally {
+    if (url) window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
 }
 
 let toastTimer = null;
